@@ -1,9 +1,11 @@
 import React from 'react';
+import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
 import logo from './logo.svg';
 import './App.css';
 import * as firebase from 'firebase';
 import Login from './components/Login.js';
-import Main from './components/Main.js'
+import Main from './components/Main.js';
+
 
 class App extends React.Component{
     constructor(props){
@@ -18,7 +20,7 @@ class App extends React.Component{
     }
 
     componentDidUpdate(){
-        console.log("updateState",this.state.user);
+        console.log("updateState",this.state.user.displayName);
     }
 
     authListener = () =>{
@@ -29,7 +31,7 @@ class App extends React.Component{
                 })
             }else{
                 this.setState({
-                    user:null
+                    user:""
                 })
             }
         })
@@ -37,9 +39,15 @@ class App extends React.Component{
 
     render(){
         return(
-            <div className="App">
-                {this.state.user ? <Main user={this.state.user.displayName}/> : <Login />}
-            </div>
+            <Router>
+                {this.state.user ? <Redirect to="/"/> : <Redirect to="/login"/>}
+                <Switch>
+                    <Route exact path = "/login" component = {Login}/>
+                    <Route exact path = "/" render={(props)=>(
+                        <Main user={this.state.user.displayName}/>
+                    )}/>
+                </Switch>
+            </Router>
         )
     }
 }
