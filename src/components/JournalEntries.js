@@ -1,7 +1,5 @@
 import React from 'react';
-import * as fire from 'firebase';
 
-import {Link} from 'react-router-dom';
 
 
 
@@ -19,8 +17,7 @@ class JournalEntries extends React.Component {
 
             {this.props.entries.map((entry,key)=>{
                 if(entry.child_name === this.props.name){
-                    return(
-                        <div key={key}>
+                    return(<div key={key}>
                             <h3>{entry.child_name}</h3>
                             <h4>Journal Entry:</h4>
                             <p>{entry.journal_entry}</p>
