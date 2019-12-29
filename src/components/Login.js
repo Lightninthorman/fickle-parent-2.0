@@ -1,78 +1,44 @@
 import React from 'react';
-import * as fire from 'firebase';
+import LoginModal from './LoginModal.js'
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      password: '',
-      userName:'',
-      error:''
+        view:'options',
     };
   }
 
-  handleChange = (e)=> {
-    this.setState({ [e.target.name]: e.target.value });
-  }
-
-  login = (e) => {
-    e.preventDefault();
-    fire.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
-    .then((user)=>{
-        console.log(user)
-        this.setState({
-            error:'',
-            userName: user.user.displayName
-        });
-        console.log(this.state.userName);
-    }).catch((error) => {
-        this.setState({
-            error:error.message
-        })
-      });
-  }
-
-  signup = (e) =>{
-    e.preventDefault();
-    fire.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((user)=>{
-        console.log('user',user);
-        if(user){
-            let updateUser = fire.auth().currentUser
-            updateUser.updateProfile({
-                error:'',
-                displayName: this.state.userName
-        }).then((newUser) => {
-            console.log('newUser',fire.auth().currentUser.displayName);
-        })
-    }
-    })
-    .catch((error) => {
-        this.setState({
-            error:error.message
-        });
+  handleView = (view) => {
+      this.setState({
+          view:view
       })
   }
+
+
+
   render() {
     return (
         <div className="col-md-6">
-            <form>
-                <div className="form-group">
-                    <label htmlFor="userName">Username</label>
-                    <input value={this.state.userName} onChange={this.handleChange} type="text" name="userName" className="form-control" id="userName" aria-describedby="userName" placeholder="Enter Username" />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="email">Email address</label>
-                    <input value={this.state.email} onChange={this.handleChange} type="email" name="email" className="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="password">Password</label>
-                    <input value={this.state.password} onChange={this.handleChange} type="password" name="password" className="form-control" id="password" placeholder="Password" />
-                </div>
-                <button type="submit" onClick={this.login} className="btn btn-primary">Login</button>
-                <button onClick={this.signup} style={{marginLeft: '25px'}} className="btn btn-success">Signup</button>
-            </form>
-            {this.state.error ? <div className="alert alert-danger">{this.state.error} </div> : null}
+            {this.state.view === 'login' ?
+                <LoginModal view={this.state.view} handleView={this.handleView} />
+            :
+                this.state.view === 'signup' ?
+                    <LoginModal view={this.state.view} handleView={this.handleView}/>
+                :
+                    <>
+                        <button type="button" onClick={()=>this.handleView('login')} className="btn btn-primary" >
+                            Log In
+                        </button>
+                        <button type="button" onClick={()=>this.handleView('signup')} className="btn btn-success" >
+                            Sign Up
+                        </button>
+                    </>
+
+            }
+
+
+
 
         </div>
     );
