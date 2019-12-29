@@ -23,18 +23,18 @@ class Login extends React.Component {
             {this.state.view === 'login' ?
                 <LoginModal view={this.state.view} handleView={this.handleView} />
             :
-                (this.state.vew === 'signup' ?
-                    <LoginModal view={this.state.view} />
+                this.state.view === 'signup' ?
+                    <LoginModal view={this.state.view} handleView={this.handleView}/>
                 :
                     <>
                         <button type="button" onClick={()=>this.handleView('login')} className="btn btn-primary" >
                             Log In
                         </button>
-                        <button type="button" className="btn btn-success" >
+                        <button type="button" onClick={()=>this.handleView('signup')} className="btn btn-success" >
                             Sign Up
                         </button>
                     </>
-                )
+
             }
 
 

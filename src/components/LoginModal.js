@@ -20,12 +20,12 @@ class Login extends React.Component {
     e.preventDefault();
     fire.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
     .then((user)=>{
-        console.log(user)
+        // console.log(user)
         this.setState({
             error:'',
             userName: user.user.displayName
         });
-        console.log(this.state.userName);
+        // console.log(this.state.userName);
     }).catch((error) => {
         this.setState({
             error:error.message
@@ -36,16 +36,14 @@ class Login extends React.Component {
   signup = (e) =>{
     e.preventDefault();
     fire.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((user)=>{
-        console.log('user',user);
+        // console.log('user',user);
         if(user){
             let updateUser = fire.auth().currentUser
             updateUser.updateProfile({
                 error:'',
                 displayName: this.state.userName
-        }).then((newUser) => {
-            console.log('newUser',fire.auth().currentUser.displayName);
-        })
-    }
+            })
+        }
     })
     .catch((error) => {
         this.setState({
@@ -57,10 +55,12 @@ class Login extends React.Component {
     return (
         <div className="col-md-6">
             <form>
-                <div className="form-group">
-                    <label htmlFor="userName">Username</label>
-                    <input value={this.state.userName} onChange={this.handleChange} type="text" name="userName" className="form-control" id="userName" aria-describedby="userName" placeholder="Enter Username" />
-                </div>
+                {this.props.view === 'signup'?
+                    <div className="form-group">
+                        <label htmlFor="userName">Username</label>
+                        <input value={this.state.userName} onChange={this.handleChange} type="text" name="userName" className="form-control" id="userName" aria-describedby="userName" placeholder="Enter Username" />
+                    </div>
+                : null}
                 <div className="form-group">
                     <label htmlFor="email">Email address</label>
                     <input value={this.state.email} onChange={this.handleChange} type="email" name="email" className="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" />

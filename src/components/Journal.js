@@ -55,7 +55,10 @@ class Journal extends React.Component {
                         )
                     }}/>
                     <Route exact path = "/charts" render={(props)=>(
-                        <Charts entries= {this.props.entries}/>
+                        <Charts
+                        entries= {this.props.entries}
+                        children={this.props.children}
+                        />
                     )}/>
                 </Switch>
             </Router>
