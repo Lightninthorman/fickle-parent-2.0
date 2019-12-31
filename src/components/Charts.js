@@ -131,7 +131,8 @@ class Charts extends React.Component {
 
             </div>
             {this.state.allData.map((entry,key)=>(
-            <div key={key}>
+            <Link key={key} to={`/charts/${entry.child}`}>
+            <div>
             <h3 >{entry.child}</h3>
             <Doughnut data = {this.getOverallAverage(entry)} options = {{
                 circumference: Math.PI,
@@ -143,7 +144,8 @@ class Charts extends React.Component {
                     }}
             />
             <h3>{average}%</h3>
-            </div>))}
+            </div>
+            </Link>))}
         <Line
             data={lineDataCompareAll} options={{
                 scales: {

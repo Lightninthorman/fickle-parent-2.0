@@ -1,5 +1,5 @@
 import React from 'react';
-import {Bar,Line,Doughnut} from 'react-chartjs-2';
+import {Bar,Line,Doughnut,Radar} from 'react-chartjs-2';
 
 
 
@@ -8,11 +8,7 @@ class ChildCharts extends React.Component {
         super(props);
         this.state = {
             data:{},
-            behaviorAvg:0,
-            helpfulAvg:0,
-            respectAvg:0,
-            sleepAvg:0,
-            regretAvg:0,
+            overallAverage:0,
             chartTypeLine:true,
             chartOptions1:{
                 scales: {
@@ -24,30 +20,33 @@ class ChildCharts extends React.Component {
                     }]
                 }
             },
+            radarChart:{
+                labels:[],
+                datasets:[]
+            },
+            overallLineChart:{
+                labels:[],
+                datasets:[]
+            },
             behaviorChart:{
                 labels:[],
-                datasets:[],
-                backgroundColor:[]
+                datasets:[]
             },
             helpfulChart:{
                 labels:[],
-                datasets:[],
-                backgroundColor:[]
+                datasets:[]
             },
             respectChart:{
                 labels:[],
-                datasets:[],
-                backgroundColor:[]
+                datasets:[]
             },
             sleepChart:{
                 labels:[],
-                datasets:[],
-                backgroundColor:[]
+                datasets:[]
             },
             regretChart:{
                 labels:[],
-                datasets:[],
-                backgroundColor:[]
+                datasets:[]
             }
         }
     }
@@ -113,18 +112,42 @@ class ChildCharts extends React.Component {
         const respectAvg = (data.respectData.reduce((total,num)=>total+num,0))/data.respectData.length;
         const sleepAvg = (data.sleepData.reduce((total,num)=>total+num,0))/data.sleepData.length;
         const regretAvg = (data.regretData.reduce((total,num)=>total+num,0))/data.regretData.length;
+        let red = Math.floor(Math.random()*256);
+        let green = Math.floor(Math.random()*256);
+        let blue = Math.floor(Math.random()*256);
 
+        const overallAverage = ((behaviorAvg + helpfulAvg +respectAvg + sleepAvg + regretAvg)/5)*10;
+
+        let overallLineData =[];
+        for(let i = 0; i < data.dates.length; i++){
+            let dailyAvg = (data.behaviorData[i] + data.helpfulData[i] + data.respectData[i] + data.sleepData[i] + data.regretData[i])/5;
+            overallLineData.push(dailyAvg);
+        }
         this.setState({
-            behaviorAvg:behaviorAvg,
-            helpfulAvg:helpfulAvg,
-            respectAvg:respectAvg,
-            sleepAvg:sleepAvg,
-            regretAvg:regretAvg,
+            overallAverage:overallAverage,
+            radarChart:{
+                labels:["Behavior","Helpful","Respect","Sleep","Regret"],
+                datasets:[{
+                    label:this.props.name,
+                    data:[behaviorAvg,helpfulAvg,respectAvg,sleepAvg,regretAvg],
+                    backgroundColor: `rgba(${red},${green},${blue},0.4)`,
+                    borderColor:`rgb(${red},${green},${blue})`
+                }]
+            },
+            overallLineChart:{
+                labels:data.dates,
+                datasets:[{
+                    label:this.props.name,
+                    data:overallLineData,
+                    fill:true,
+                    backgroundColor: `rgba(${red},${green},${blue},0.4)`,
+                    borderColor:`rgb(${red},${green},${blue})`
+                }]
+            }
         })
     }
 
     changeChartType = () => {
-
         this.setState({
             chartTypeLine:!this.state.chartTypeLine
         })
@@ -139,6 +162,8 @@ class ChildCharts extends React.Component {
        <div className="col-md-6">
 
             <h3>Hi! You made it to {this.props.name}'s charts!</h3>
+            <Line data = {this.state.overallLineChart} options = {this.state.chartOptions1}/>
+            <Radar data ={this.state.radarChart} options = {this.state.chartOptions1} />
             <button onClick={this.changeChartType}>Change to {this.state.chartTypeLine ? 'bar' : 'line'} chart!</button>
             {this.state.chartTypeLine ?
                 <Line data={this.state.behaviorChart}
