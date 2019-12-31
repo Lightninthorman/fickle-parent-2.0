@@ -1,5 +1,6 @@
 import React from 'react';
-import {Bar,Line,Polar} from 'react-chartjs-2';
+import {Line,Doughnut} from 'react-chartjs-2';
+import {Link} from 'react-router-dom';
 
 
 
@@ -7,32 +8,8 @@ let lineDataCompareAll = {
     labels:[],
     datasets:[]
 }
-let options = {
-    scales: {
-        yAxes: [{
-            ticks: {
-                beginAtZero:true
-            }
-        }]
-    }
-}
 
-
-// {
-//   labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-//   datasets: [{
-//       label: "Stock A",
-//       data: [65, 59, 80, 81, 56, 55, 40, ,60,55,30,78],
-//       spanGaps: true,
-//     }, {
-//       label: "Stock B",
-//       data: [10, 20, 60, 95, 64, 78, 90,,70,40,70,89],
-//       spanGaps: false,
-//     }
-//
-//   ]
-// };
-
+let average = 0
 
 
 class Charts extends React.Component {
@@ -41,6 +18,32 @@ class Charts extends React.Component {
         this.state = {
             allData:[]
         }
+    }
+
+    getOverallAverage = (data) => {
+        let behaviorAvg = (data.behaviorData.reduce((total,num)=>total+num,0))/data.behaviorData.length
+        let helpfulAvg = (data.helpfulData.reduce((total,num)=>total+num,0))/data.helpfulData.length
+        let respectAvg = (data.respectData.reduce((total,num)=>total+num,0))/data.respectData.length
+        let sleepAvg = (data.sleepData.reduce((total,num)=>total+num,0))/data.sleepData.length
+        let regretAvg = (data.regretData.reduce((total,num)=>total+num,0))/data.regretData.length
+
+        const overallAverage = ((behaviorAvg + helpfulAvg +respectAvg + sleepAvg + regretAvg)/5)*10
+
+        const gaugeChartData ={
+            labels:["Current %","Potential"],
+            datasets:[{
+                label:data.child,
+                data:[overallAverage, (100-overallAverage)],
+                backgroundColor: [
+                "rgb(255, 99, 132)",
+                "rgb(54, 162, 235)",
+                "rgb(255, 205, 86)"
+                ]
+            }]
+        }
+        average = overallAverage.toFixed(1);
+        return  gaugeChartData
+
     }
 
     getLineData = (data) => {
@@ -104,6 +107,12 @@ class Charts extends React.Component {
             allData:newData
         })
         this.getLineData(newData)
+        for(let y = 0; y<newData.length; y++){
+            this.getOverallAverage(newData[y])
+        }
+
+        this.props.getChildData(newData)
+
     }
 
     componentDidMount(){
@@ -114,23 +123,40 @@ class Charts extends React.Component {
 
   render() {
     return (
-       <div className="col-md-6">
-            {
-            //     {this.state.AllData.map((entry,key)=>(
-            //     <div key={key}>
-            //     <h3 >{entry.child}</h3>
-            //     <h4>Score</h4>
-            //     <p>{entry.behaviorData}</p>
-            //     </div>
-            // ))}
+        <div className="col-md-6">
+            <div>
+                {this.props.children.map((child,key)=>(
+                    <Link key={key} to={`/charts/${child}`}> {child} Chart</Link>
+                ))}
 
-        }
+            </div>
+            {this.state.allData.map((entry,key)=>(
+            <div key={key}>
+            <h3 >{entry.child}</h3>
+            <Doughnut data = {this.getOverallAverage(entry)} options = {{
+                circumference: Math.PI,
+                rotation : Math.PI,
+                cutoutPercentage : 55,
+                legend:{
+                    display:false
+                }
+                    }}
+            />
+            <h3>{average}%</h3>
+            </div>))}
         <Line
-            data={lineDataCompareAll} options={options}
+            data={lineDataCompareAll} options={{
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            min:0,
+                            max:10
+                        }
+                    }]
+                }
+            }}
 
         />
-
-
       </div>
     );
   }

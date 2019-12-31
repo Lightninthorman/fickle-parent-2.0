@@ -3,6 +3,7 @@ import * as fire from 'firebase';
 import {BrowserRouter as Router, Route, Switch,Link, Redirect} from 'react-router-dom';
 import JournalEntries from './JournalEntries.js'
 import Charts from './Charts.js'
+import ChildCharts from './ChildCharts.js'
 
 
 
@@ -12,7 +13,8 @@ class Journal extends React.Component {
         this.state ={
             child:'Isaac',
             view:'journal',
-            children: []
+            children: [],
+            childData:[]
         }
     }
 
@@ -24,6 +26,13 @@ class Journal extends React.Component {
 
     logout = () => {
         fire.auth().signOut()
+    }
+
+    getChildData = (data) => {
+        this.setState({
+            childData:data
+        })
+        console.log(data[0].child);
     }
 
     componentDidMount(){
@@ -58,8 +67,17 @@ class Journal extends React.Component {
                         <Charts
                         entries= {this.props.entries}
                         children={this.props.children}
+                        getChildData={this.getChildData}
                         />
                     )}/>
+
+                    <Route exact path = "/charts/:name" render ={(props)=>{
+                        let name = props.location.pathname.replace('/charts/','');
+                        return(
+                            <ChildCharts name={name} children={this.state.children} childData={this.state.childData}/>
+                        )
+                    }}/>
+
                 </Switch>
             </Router>
 
