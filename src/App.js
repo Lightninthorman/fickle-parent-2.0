@@ -111,10 +111,10 @@ class App extends React.Component{
                     <Route exact path = "/new-entry/:name" render ={(props)=>{
                         let name = props.location.pathname.replace('/new-entry/','');
                         return(
-                            <Form name={name} displayName={this.state.user.displayName}/>
+                            <Form name={name} displayName={this.state.user.displayName} userId={this.state.user.uid}/>
                         )
                     }}/>
-                    
+
 
                 </Switch>
             </Router>
