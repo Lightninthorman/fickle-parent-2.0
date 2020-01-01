@@ -31,6 +31,7 @@ class App extends React.Component{
         }).catch(err=>console.log(err))
     }
 
+
     findChildren = (data) => {
 
         let children = [];
@@ -101,19 +102,13 @@ class App extends React.Component{
                             children={this.state.children}
                         />
                     )}/>
-                    <Route exact path = "/" render={(props)=>(
-                        <Journal
-                            user={this.state.user}
-                            entries={this.state.entries}
-                            children={this.state.children}
-                        />
-                    )}/>
-                    <Route exact path = "/new-entry/:name" render ={(props)=>{
-                        let name = props.location.pathname.replace('/new-entry/','');
+                    <Route exact path = "/new-child" render ={(props)=>{
+
                         return(
-                            <Form name={name} displayName={this.state.user.displayName} userId={this.state.user.uid}/>
+                            <Form displayName={this.state.user.displayName} userId={this.state.user.uid} form="newChild"/>
                         )
                     }}/>
+
 
 
                 </Switch>

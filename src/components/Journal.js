@@ -4,6 +4,7 @@ import {BrowserRouter as Router, Route, Switch,Link, Redirect} from 'react-route
 import JournalEntries from './JournalEntries.js'
 import Charts from './Charts.js'
 import ChildCharts from './ChildCharts.js'
+import Form from './Form.js';
 
 
 
@@ -36,8 +37,7 @@ class Journal extends React.Component {
     }
 
     componentDidMount(){
-        // setTimeout(this.fetchEntries,1100);
-        // this.findChildren()
+
     }
 
   render() {
@@ -46,7 +46,7 @@ class Journal extends React.Component {
        {this.props.user ? null : <Redirect to="/login"/>}
             Welcome Home {this.props.user.displayName}
             <button onClick={this.logout}>Logout</button>
-            <Link to={`/new-entry/${this.state.child}`}>Add Child</Link>
+            <Link to={`/new-child`}>Add Child</Link>
             <Router>
                 <div>
                     {this.props.children.map((child,key)=>(
@@ -61,6 +61,24 @@ class Journal extends React.Component {
                         let name = props.location.pathname.replace('/journal-entries/','');
                         return(
                             <JournalEntries name={name} entries={this.props.entries}/>
+                        )
+                    }}/>
+                    <Route exact path = "/new-entry/:name" render = {(props)=>{
+                        let name = props.location.pathname.replace('/new-entry/','');
+                        return(
+                            <Form name={name} displayName={this.props.user.displayName} userId={this.props.user.uid} form="newEntry"/>
+                        )
+                    }} />
+                    <Route exact path = "/update-entry/:id" render ={(props)=>{
+                        let entry_id = props.location.pathname.replace('/update-entry/','');
+                        let entry = this.props.entries.filter(entry=>{return entry.entry_id === parseInt(entry_id)})
+                        return(
+                            <Form
+                                entry_id={entry_id}
+                                displayName={this.props.user.displayName}
+                                entry={entry}
+                                userId={this.props.user.uid}
+                                form="updateEntry"/>
                         )
                     }}/>
                     <Route exact path = "/charts" render={(props)=>(
