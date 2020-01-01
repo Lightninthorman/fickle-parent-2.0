@@ -31,6 +31,47 @@ class App extends React.Component{
         }).catch(err=>console.log(err))
     }
 
+    handleCreate = (formData) => {
+        fetch(`${baseUrl}`,{
+            body:JSON.stringify(formData),
+            method:'POST',
+            headers:{
+                'Accept': 'application/json, text/plain, */*', 'Content-Type':'applicaiont/json'
+            }
+        })
+        .then(updatedEntries => {
+            return updatedEntries.json()
+            // console.log(updatedEntries);
+        })
+        .then(jsonnedEntries => {
+            this.setState({entries:jsonnedEntries});
+        })
+        .catch(err=>console.log(err))
+
+
+    }
+
+    handleUpdate = (formData) => {
+        // console.log(formData);
+        // console.log(formData.entry_id);
+        fetch(`${baseUrl}${formData.entry_id}`,{
+            body:JSON.stringify(formData),
+            method:'PUT',
+            headers:{
+                'Accept': 'application/json, text/plain, */*', 'Content-Type':'applicaiont/json'
+            }
+        })
+        .then(updatedEntries => {
+            return updatedEntries.json()
+            // console.log(updatedEntries);
+        })
+        .then(jsonnedEntries => {
+            this.setState({entries:jsonnedEntries});
+        })
+        .catch(err=>console.log(err))
+
+    }
+
 
     findChildren = (data) => {
 
@@ -74,7 +115,7 @@ class App extends React.Component{
                 // console.log("authchanged");
                 if(user){
                     this.setState({
-                        user:user,
+                        user:user
                     })
                 }else{
                     this.setState({
@@ -100,12 +141,20 @@ class App extends React.Component{
                             user={this.state.user}
                             entries={this.state.entries}
                             children={this.state.children}
+                            handleCreate={this.handleCreate}
+                            handleUpdate={this.handleUpdate}
                         />
                     )}/>
                     <Route exact path = "/new-child" render ={(props)=>{
 
                         return(
-                            <Form displayName={this.state.user.displayName} userId={this.state.user.uid} form="newChild"/>
+                            <Form
+                            displayName={this.state.user.displayName}
+                            userId={this.state.user.uid}
+                            form="newChild"
+                            handleCreate={this.handleCreate}
+                            />
+
                         )
                     }}/>
 

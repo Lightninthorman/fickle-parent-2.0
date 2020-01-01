@@ -14,7 +14,7 @@ class JournalEntries extends React.Component {
   render() {
     return (
        <div className="col-md-6">
-            <Link to={`/new-entry/${this.props.name}`} className="btn btn-success">New Journal Entry</Link>
+            <Link to={`/new-entry/${this.props.name}`} className="btn btn-success" onClick={this.props.toggleFormRedirect}>New Journal Entry</Link>
             {this.props.entries.map((entry,key)=>{
                 if(entry.child_name === this.props.name){
                     return(<div key={key}>

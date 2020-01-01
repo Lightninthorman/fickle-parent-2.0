@@ -46,7 +46,7 @@ class Journal extends React.Component {
        {this.props.user ? null : <Redirect to="/login"/>}
             Welcome Home {this.props.user.displayName}
             <button onClick={this.logout}>Logout</button>
-            <Link to={`/new-child`}>Add Child</Link>
+            <Link to={`/new-child`} onClick={this.props.toggleFormRedirect}>Add Child</Link>
             <Router>
                 <div>
                     {this.props.children.map((child,key)=>(
@@ -66,7 +66,13 @@ class Journal extends React.Component {
                     <Route exact path = "/new-entry/:name" render = {(props)=>{
                         let name = props.location.pathname.replace('/new-entry/','');
                         return(
-                            <Form name={name} displayName={this.props.user.displayName} userId={this.props.user.uid} form="newEntry"/>
+                            <Form
+                            name={name}
+                            displayName={this.props.user.displayName}
+                            userId={this.props.user.uid}
+                            form="newEntry"
+                            handleCreate={this.props.handleCreate}
+                            />
                         )
                     }} />
                     <Route exact path = "/update-entry/:id" render ={(props)=>{
@@ -78,7 +84,9 @@ class Journal extends React.Component {
                                 displayName={this.props.user.displayName}
                                 entry={entry}
                                 userId={this.props.user.uid}
-                                form="updateEntry"/>
+                                form="updateEntry"
+                                handleUpdate={this.props.handleUpdate}
+                                />
                         )
                     }}/>
                     <Route exact path = "/charts" render={(props)=>(
