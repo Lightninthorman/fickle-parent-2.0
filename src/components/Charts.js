@@ -1,6 +1,6 @@
 import React from 'react';
 import {Line,Doughnut} from 'react-chartjs-2';
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 
 
 
@@ -47,7 +47,7 @@ class Charts extends React.Component {
     }
 
     getLineData = (data) => {
-        let lineLabels = data[data.length-1].dates;
+        let lineLabels = data[0].dates;
         let lineDatasets = [];
         for (let i=0; i < data.length; i++){
             let red = Math.floor(Math.random()*256);
@@ -78,6 +78,7 @@ class Charts extends React.Component {
 
 
     getAllData = () => {
+        console.log("called");
         let newData = [];
         for(let i = 0; i < this.props.children.length; i++){
             let childBehaviorData = {
@@ -118,7 +119,11 @@ class Charts extends React.Component {
     componentDidMount(){
         // setTimeout(this.fetchEntries,1100);
         // this.findChildren()
-        this.getAllData()
+        if(this.props.fetching){
+            this.getAllData()
+        }else{
+            console.log("hi");
+        }
     }
 
   render() {
@@ -131,7 +136,7 @@ class Charts extends React.Component {
 
             </div>
             {this.state.allData.map((entry,key)=>(
-            <Link key={key} to={`/charts/${entry.child}`}>
+            <Link key={key} to={`/charts/${entry.child}`} onClick={()=>this.props.changeFetching(true)}>
             <div>
             <h3 >{entry.child}</h3>
             <Doughnut data = {this.getOverallAverage(entry)} options = {{

@@ -154,8 +154,14 @@ class ChildCharts extends React.Component {
     }
 
     componentDidMount(){
-        this.getChildData(this.props.childData);
+        if(this.props.fetching){
+            this.getChildData(this.props.childData);
+        }else{
+            console.log("childCharts redirect");
+        }
+
     }
+
 
   render() {
     return (

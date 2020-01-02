@@ -4,29 +4,35 @@ import './App.css';
 import * as firebase from 'firebase';
 import Login from './components/Login.js';
 import Journal from './components/Journal.js';
+import JournalEntries from './components/JournalEntries.js'
+import Charts from './components/Charts.js'
+import ChildCharts from './components/ChildCharts.js'
+
 import Form from './components/Form.js';
 
 
 const baseUrl = "https://fickle-parent-backend.herokuapp.com/fickle-parent/";
 
 class App extends React.Component{
+    fetching = false;
     constructor(props){
         super(props);
         this.state={
             user:{},
             entries:[],
             children:[],
-            formRedirect:false
+            formRedirect:false,
+            child:'Isaac',
+            view:'journal',
+            childData:[]
         }
     }
 
     fetchEntries = () => {
-        // console.log('fetch called');
+        console.log('fetch called');
         fetch(`${baseUrl}${this.state.user.uid}`)
         .then( data => data.json())
         .then(jData => {
-            // console.log("data",jData[0]);
-
             this.setState({entries:jData})
             this.findChildren(jData);
         }).catch(err=>console.log(err))
@@ -46,6 +52,7 @@ class App extends React.Component{
         })
         .then(jsonnedEntries => {
             this.setState({entries:jsonnedEntries});
+            this.findChildren(jsonnedEntries);
             return "next"
         }).then(next =>{
             this.toggleformredirect()
@@ -71,6 +78,7 @@ class App extends React.Component{
         })
         .then(jsonnedEntries => {
             this.setState({entries:jsonnedEntries});
+            this.findChildren(jsonnedEntries);
             return "next"
         }).then(next =>{
             this.toggleformredirect()
@@ -106,6 +114,27 @@ class App extends React.Component{
         })
     }
 
+    handleView = (view) => {
+        this.setState({
+            view:view
+        })
+    }
+
+    logout = () => {
+        firebase.auth().signOut()
+    }
+
+    getChildData = (data) => {
+        this.setState({
+            childData:data
+        })
+        console.log(data[0].child);
+    }
+
+    changeFetching = (bool) => {
+        this.fetching = bool
+    }
+
     componentDidMount(){
         this.authListener();
         // this.fetchEntries();
@@ -113,8 +142,8 @@ class App extends React.Component{
     }
 
     componentDidUpdate(prevProps,prevState){
-        if(this.state.user.displayName !== prevState.user.displayName){
-            if(this.state.user.displayName){
+        if(this.state.user.uid !== prevState.user.uid){
+            if(this.state.user.uid){
                 this.fetchEntries();
             }
 
@@ -154,13 +183,79 @@ class App extends React.Component{
                             user={this.state.user}
                             entries={this.state.entries}
                             children={this.state.children}
-                            handleCreate={this.handleCreate}
-                            handleUpdate={this.handleUpdate}
                             formRedirect={this.state.formRedirect}
-                            toggleformredirect={this.toggleformredirect}
+                            fetching ={this.fetching}
+                            changeFetching={this.changeFetching}
+
                         />
                     )}/>
 
+                    <Route exact path = "/journal-entries/:name" render ={(props)=>{
+                        let name = props.location.pathname.replace('/journal-entries/','');
+                        return(
+                            <JournalEntries name={name} entries={this.state.entries}/>
+                        )
+                    }}/>
+                    <Route exact path = "/new-child" render ={(props)=>{
+
+                        return(
+                            <Form
+                            userId={this.state.user.uid}
+                            form="newChild"
+                            handleCreate={this.handleCreate}
+                            formRedirect={this.state.formRedirect}
+                            toggleformredirect={this.toggleformredirect}
+                            />
+                        )
+                    }}/>
+                    <Route exact path = "/new-entry/:name" render = {(props)=>{
+                        let name = props.location.pathname.replace('/new-entry/','');
+                        return(
+                            <Form
+                            name={name}
+                            userId={this.state.user.uid}
+                            form="newEntry"
+                            handleCreate={this.handleCreate}
+                            formRedirect={this.state.formRedirect}
+                            toggleformredirect={this.toggleformredirect}
+                            />
+                        )
+                    }} />
+                    <Route exact path = "/update-entry/:id" render ={(props)=>{
+                        let entry_id = props.location.pathname.replace('/update-entry/','');
+                        let entry = this.state.entries.filter(entry=>{return entry.entry_id === parseInt(entry_id)})
+                        return(
+                            <Form
+                                entry_id={entry_id}
+                                entry={entry}
+                                userId={this.state.user.uid}
+                                form="updateEntry"
+                                handleUpdate={this.handleUpdate}
+                                formRedirect={this.state.formRedirect}
+                                toggleformredirect={this.toggleformredirect}
+                                />
+                        )
+                    }}/>
+                    <Route exact path = "/charts" render={(props)=>(
+                        <Charts
+                        entries= {this.state.entries}
+                        children={this.state.children}
+                        getChildData={this.getChildData}
+                        fetching={this.fetching}
+                        />
+                    )}/>
+
+                    <Route exact path = "/charts/:name" render ={(props)=>{
+                        let name = props.location.pathname.replace('/charts/','');
+                        return(
+                            <ChildCharts
+                                name={name}
+                                children={this.state.children}
+                                childData={this.state.childData}
+                                fetching={this.fetching}
+                                />
+                        )
+                    }}/>
 
 
 

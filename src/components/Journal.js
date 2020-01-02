@@ -36,12 +36,12 @@ class Journal extends React.Component {
         console.log(data[0].child);
     }
 
-    
+
 
   render() {
     return (
        <div className="col-md-6">
-       <Router>
+
        {this.props.user ? null : <Redirect to="/login"/>}
             Welcome Home {this.props.user.displayName}
             <button onClick={this.logout}>Logout</button>
@@ -53,73 +53,8 @@ class Journal extends React.Component {
                     ))}
                 </div>
                 <div>
-                    <Link to= {"/charts"}>Charts</Link>
+                    <Link to= {"/charts"} onClick={()=>this.props.changeFetching(true)}>Charts</Link>
                 </div>
-                <Switch>
-                    <Route exact path = "/journal-entries/:name" render ={(props)=>{
-                        let name = props.location.pathname.replace('/journal-entries/','');
-                        return(
-                            <JournalEntries name={name} entries={this.props.entries}/>
-                        )
-                    }}/>
-                    <Route exact path = "/new-child" render ={(props)=>{
-
-                        return(
-                            <Form
-                            userId={this.props.user.uid}
-                            form="newChild"
-                            handleCreate={this.props.handleCreate}
-                            formRedirect={this.props.formRedirect}
-                            toggleformredirect={this.props.toggleformredirect}
-                            />
-                        )
-                    }}/>
-                    <Route exact path = "/new-entry/:name" render = {(props)=>{
-                        let name = props.location.pathname.replace('/new-entry/','');
-                        return(
-                            <Form
-                            name={name}
-                            userId={this.props.user.uid}
-                            form="newEntry"
-                            handleCreate={this.props.handleCreate}
-                            formRedirect={this.props.formRedirect}
-                            toggleformredirect={this.props.toggleformredirect}
-                            />
-                        )
-                    }} />
-                    <Route exact path = "/update-entry/:id" render ={(props)=>{
-                        let entry_id = props.location.pathname.replace('/update-entry/','');
-                        let entry = this.props.entries.filter(entry=>{return entry.entry_id === parseInt(entry_id)})
-                        return(
-                            <Form
-                                entry_id={entry_id}
-                                entry={entry}
-                                userId={this.props.user.uid}
-                                form="updateEntry"
-                                handleUpdate={this.props.handleUpdate}
-                                formRedirect={this.props.formRedirect}
-                                toggleformredirect={this.props.toggleformredirect}
-                                />
-                        )
-                    }}/>
-                    <Route exact path = "/charts" render={(props)=>(
-                        <Charts
-                        entries= {this.props.entries}
-                        children={this.props.children}
-                        getChildData={this.getChildData}
-                        />
-                    )}/>
-
-                    <Route exact path = "/charts/:name" render ={(props)=>{
-                        let name = props.location.pathname.replace('/charts/','');
-                        return(
-                            <ChildCharts name={name} children={this.state.children} childData={this.state.childData}/>
-                        )
-                    }}/>
-
-                </Switch>
-            </Router>
-
 
       </div>
     );
