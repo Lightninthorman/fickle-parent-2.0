@@ -58,13 +58,18 @@ class Charts extends React.Component {
                 data:[],
                 fill:true,
                 backgroundColor: `rgba(${red},${green},${blue},0.4)`,
-                borderColor:`rgb(${red},${green},${blue})`
+                borderColor:`rgb(${red},${green},${blue})`,
+                spanGaps:true
 
             };
+
             childData.label = data[i].child;
                 for(let x = 0; x < data[i].dates.length; x++){
                     let dailyAvg = (data[i].behaviorData[x] + data[i].helpfulData[x] + data[i].respectData[x] + data[i].sleepData[x] + data[i].regretData[x])/ 5
                     childData.data.push(dailyAvg)
+                }
+                while(lineLabels.length !== childData.data.length){
+                    childData.data.unshift("")
                 }
                 lineDatasets.push(childData);
             }

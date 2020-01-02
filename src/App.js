@@ -7,6 +7,7 @@ import Journal from './components/Journal.js';
 import JournalEntries from './components/JournalEntries.js'
 import Charts from './components/Charts.js'
 import ChildCharts from './components/ChildCharts.js'
+import Navbar from './components/Navbar.js'
 
 import Form from './components/Form.js';
 
@@ -173,93 +174,100 @@ class App extends React.Component{
     render(){
         return(
             <Router>
-                {this.state.user ? <Redirect to="/"/> : <Redirect to="/login"/>}
-                <Switch>
-                    <Route exact path = "/login" render = {(props) => (
-                        <Login fetchEntries={this.fetchEntries} />
-                    )}/>
-                    <Route exact path = "/" render={(props)=>(
-                        <Journal
-                            user={this.state.user}
-                            entries={this.state.entries}
-                            children={this.state.children}
-                            formRedirect={this.state.formRedirect}
-                            fetching ={this.fetching}
-                            changeFetching={this.changeFetching}
+            {this.state.user ? <Redirect to="/"/> : <Redirect to="/login"/>}
+            {this.state.user?
+                <Navbar
+                logout={this.logout} displayName={this.state.user.displayName}
+                changeFetching={this.changeFetching}/>
+                : null
+            }
+                <div className="main min-vh-100 m-0">
 
-                        />
-                    )}/>
-
-                    <Route exact path = "/journal-entries/:name" render ={(props)=>{
-                        let name = props.location.pathname.replace('/journal-entries/','');
-                        return(
-                            <JournalEntries name={name} entries={this.state.entries}/>
-                        )
-                    }}/>
-                    <Route exact path = "/new-child" render ={(props)=>{
-
-                        return(
-                            <Form
-                            userId={this.state.user.uid}
-                            form="newChild"
-                            handleCreate={this.handleCreate}
-                            formRedirect={this.state.formRedirect}
-                            toggleformredirect={this.toggleformredirect}
+                    <Switch>
+                        <Route exact path = "/login" render = {(props) => (
+                            <Login fetchEntries={this.fetchEntries} />
+                        )}/>
+                        <Route exact path = "/" render={(props)=>(
+                            <Journal
+                                user={this.state.user}
+                                entries={this.state.entries}
+                                children={this.state.children}
+                                formRedirect={this.state.formRedirect}
                             />
-                        )
-                    }}/>
-                    <Route exact path = "/new-entry/:name" render = {(props)=>{
-                        let name = props.location.pathname.replace('/new-entry/','');
-                        return(
-                            <Form
-                            name={name}
-                            userId={this.state.user.uid}
-                            form="newEntry"
-                            handleCreate={this.handleCreate}
-                            formRedirect={this.state.formRedirect}
-                            toggleformredirect={this.toggleformredirect}
-                            />
-                        )
-                    }} />
-                    <Route exact path = "/update-entry/:id" render ={(props)=>{
-                        let entry_id = props.location.pathname.replace('/update-entry/','');
-                        let entry = this.state.entries.filter(entry=>{return entry.entry_id === parseInt(entry_id)})
-                        return(
-                            <Form
-                                entry_id={entry_id}
-                                entry={entry}
+                        )}/>
+
+                        <Route exact path = "/journal-entries/:name" render ={(props)=>{
+                            let name = props.location.pathname.replace('/journal-entries/','');
+                            return(
+                                <JournalEntries name={name} entries={this.state.entries}/>
+                            )
+                        }}/>
+                        <Route exact path = "/new-child" render ={(props)=>{
+
+                            return(
+                                <Form
                                 userId={this.state.user.uid}
-                                form="updateEntry"
-                                handleUpdate={this.handleUpdate}
+                                form="newChild"
+                                handleCreate={this.handleCreate}
                                 formRedirect={this.state.formRedirect}
                                 toggleformredirect={this.toggleformredirect}
                                 />
-                        )
-                    }}/>
-                    <Route exact path = "/charts" render={(props)=>(
-                        <Charts
-                        entries= {this.state.entries}
-                        children={this.state.children}
-                        getChildData={this.getChildData}
-                        fetching={this.fetching}
-                        />
-                    )}/>
-
-                    <Route exact path = "/charts/:name" render ={(props)=>{
-                        let name = props.location.pathname.replace('/charts/','');
-                        return(
-                            <ChildCharts
+                            )
+                        }}/>
+                        <Route exact path = "/new-entry/:name" render = {(props)=>{
+                            let name = props.location.pathname.replace('/new-entry/','');
+                            return(
+                                <Form
                                 name={name}
-                                children={this.state.children}
-                                childData={this.state.childData}
-                                fetching={this.fetching}
+                                userId={this.state.user.uid}
+                                form="newEntry"
+                                handleCreate={this.handleCreate}
+                                formRedirect={this.state.formRedirect}
+                                toggleformredirect={this.toggleformredirect}
                                 />
-                        )
-                    }}/>
+                            )
+                        }} />
+                        <Route exact path = "/update-entry/:id" render ={(props)=>{
+                            let entry_id = props.location.pathname.replace('/update-entry/','');
+                            let entry = this.state.entries.filter(entry=>{return entry.entry_id === parseInt(entry_id)})
+                            return(
+                                <Form
+                                    entry_id={entry_id}
+                                    entry={entry}
+                                    userId={this.state.user.uid}
+                                    form="updateEntry"
+                                    handleUpdate={this.handleUpdate}
+                                    formRedirect={this.state.formRedirect}
+                                    toggleformredirect={this.toggleformredirect}
+                                    />
+                            )
+                        }}/>
+                        <Route exact path = "/charts" render={(props)=>(
+                            <Charts
+                            entries= {this.state.entries}
+                            children={this.state.children}
+                            getChildData={this.getChildData}
+                            fetching={this.fetching}
+                            changeFetching={this.changeFetching}
+                            />
+                        )}/>
+
+                        <Route exact path = "/charts/:name" render ={(props)=>{
+                            let name = props.location.pathname.replace('/charts/','');
+                            return(
+                                <ChildCharts
+                                    name={name}
+                                    children={this.state.children}
+                                    childData={this.state.childData}
+                                    fetching={this.fetching}
+                                    />
+                            )
+                        }}/>
 
 
 
-                </Switch>
+                    </Switch>
+                </div>
             </Router>
         )
     }

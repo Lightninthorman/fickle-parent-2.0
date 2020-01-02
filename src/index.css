@@ -11,3 +11,74 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.main{
+    background-image:url("./images/App.jpeg");
+    background-size:cover;
+    border:1px solid rgba(191,224,231,.01);
+}
+
+/*
+=========
+Login Page and Form Styling
+=========
+*/
+
+.login{
+    background-image:url("./images/App.jpeg");
+    background-size:cover;
+    background-position: center;
+
+
+}
+
+.productHighlights{
+
+}
+
+.formContainer{
+    background-color:rgb(233,236,239);
+    border-radius:3px;
+}
+
+/*
+=========
+Navbar
+=========
+*/
+.navbar{
+    height:75px;
+    background-color:rgb(233,236,239);
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.logout{
+    width:65px;
+    height:25px;
+    padding: 0;
+}
+
+/*
+=========
+Journal
+=========
+*/
+.journal{
+    background-image:url("./images/journal_paper.jpg");
+    background-size:cover;
+    border-radius:2px;
+    min-height: 75vh;
+}
+
+.addChildBtn{
+    background-color:saddlebrown;
+    color:white;
+}
+
+.childBtn{
+    background-color:peru;
+    color:white;
+}

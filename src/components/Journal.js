@@ -1,6 +1,6 @@
 import React from 'react';
 import * as fire from 'firebase';
-import {BrowserRouter as Router, Route, Switch,Link, Redirect} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 import JournalEntries from './JournalEntries.js'
 import Charts from './Charts.js'
 import ChildCharts from './ChildCharts.js'
@@ -40,21 +40,18 @@ class Journal extends React.Component {
 
   render() {
     return (
-       <div className="col-md-6">
+       <div className="journal container mt-5 d-flex flex-column align-items-center">
+       <Link to="/new-child" className="addChildBtn btn btn-outline-dark my-5">Add Child</Link>
 
        {this.props.user ? null : <Redirect to="/login"/>}
-            Welcome Home {this.props.user.displayName}
-            <button onClick={this.logout}>Logout</button>
-            <Link to={`/new-child`} >Add Child</Link>
 
-                <div>
-                    {this.props.children.map((child,key)=>(
-                        <Link to={`/journal-entries/${child}`} key={key}> {child} </Link>
-                    ))}
-                </div>
-                <div>
-                    <Link to= {"/charts"} onClick={()=>this.props.changeFetching(true)}>Charts</Link>
-                </div>
+            <div className="childJournalLinks d-flex flex-row flex-wrap justify-content-center">
+
+                {this.props.children.map((child,key)=>(
+                    <Link to={`/journal-entries/${child}`} key={key} className="childBtn btn btn-outline-dark mx-3 mb-3"> {child} </Link>
+                ))}
+            </div>
+
 
       </div>
     );
