@@ -21,8 +21,7 @@ class Form extends React.Component{
         sleep:10,
         sleep_desc:"",
         regret:10,
-        regret_desc:"",
-        formRedirect:false
+        regret_desc:""
 
     }
   }
@@ -53,10 +52,11 @@ class Form extends React.Component{
 
       if (this.props.form === 'updateEntry'){
           this.props.handleUpdate(this.state)
+          this.props.toggleformredirect();
       }else if(this.props.form === 'newEntry' || this.props.form === 'newChild'){
-          this.props.handleCreate(this.state)
+          this.props.handleCreate(this.state);
+          this.props.toggleformredirect();
       }
-      this.toggleFormRedirect()
     }
 
   populateFormRatings = (subject) => {
@@ -75,7 +75,7 @@ class Form extends React.Component{
 
       if (form === 'updateEntry') {
           entry = entry[0];
-          console.log(entry);
+          // console.log(entry);
           this.setState({
               entry_id:this.props.entry_id,
               entry_date:entry.entry_date,
@@ -104,11 +104,7 @@ class Form extends React.Component{
       }
   }
 
-  toggleFormRedirect = () => {
-      this.setState({
-          formRedirect:!this.state.formRedirect
-      })
-  }
+
 
   componentDidMount(){
 
@@ -119,8 +115,8 @@ class Form extends React.Component{
 
         return(
             <div>
-            {this.props.displayName ? null : <Redirect to="/login"/>}
-            {this.state.formRedirect ? <Redirect to="/"/> : null}
+            {this.props.userId ? null : <Redirect to="/login"/>}
+            {this.props.formRedirect ? <Redirect to="/"/> : null}
                 <h3>{this.state.child_name}</h3>
                 <h4>Today is {this.state.entry_date}</h4>
                 <form onSubmit={this.handleSubmit}>

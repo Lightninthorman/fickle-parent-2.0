@@ -36,18 +36,17 @@ class Journal extends React.Component {
         console.log(data[0].child);
     }
 
-    componentDidMount(){
-
-    }
+    
 
   render() {
     return (
        <div className="col-md-6">
+       <Router>
        {this.props.user ? null : <Redirect to="/login"/>}
             Welcome Home {this.props.user.displayName}
             <button onClick={this.logout}>Logout</button>
-            <Link to={`/new-child`} onClick={this.props.toggleFormRedirect}>Add Child</Link>
-            <Router>
+            <Link to={`/new-child`} >Add Child</Link>
+
                 <div>
                     {this.props.children.map((child,key)=>(
                         <Link to={`/journal-entries/${child}`} key={key}> {child} </Link>
@@ -63,15 +62,28 @@ class Journal extends React.Component {
                             <JournalEntries name={name} entries={this.props.entries}/>
                         )
                     }}/>
+                    <Route exact path = "/new-child" render ={(props)=>{
+
+                        return(
+                            <Form
+                            userId={this.props.user.uid}
+                            form="newChild"
+                            handleCreate={this.props.handleCreate}
+                            formRedirect={this.props.formRedirect}
+                            toggleformredirect={this.props.toggleformredirect}
+                            />
+                        )
+                    }}/>
                     <Route exact path = "/new-entry/:name" render = {(props)=>{
                         let name = props.location.pathname.replace('/new-entry/','');
                         return(
                             <Form
                             name={name}
-                            displayName={this.props.user.displayName}
                             userId={this.props.user.uid}
                             form="newEntry"
                             handleCreate={this.props.handleCreate}
+                            formRedirect={this.props.formRedirect}
+                            toggleformredirect={this.props.toggleformredirect}
                             />
                         )
                     }} />
@@ -81,11 +93,12 @@ class Journal extends React.Component {
                         return(
                             <Form
                                 entry_id={entry_id}
-                                displayName={this.props.user.displayName}
                                 entry={entry}
                                 userId={this.props.user.uid}
                                 form="updateEntry"
                                 handleUpdate={this.props.handleUpdate}
+                                formRedirect={this.props.formRedirect}
+                                toggleformredirect={this.props.toggleformredirect}
                                 />
                         )
                     }}/>

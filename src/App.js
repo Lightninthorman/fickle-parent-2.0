@@ -15,7 +15,8 @@ class App extends React.Component{
         this.state={
             user:{},
             entries:[],
-            children:[]
+            children:[],
+            formRedirect:false
         }
     }
 
@@ -45,6 +46,9 @@ class App extends React.Component{
         })
         .then(jsonnedEntries => {
             this.setState({entries:jsonnedEntries});
+            return "next"
+        }).then(next =>{
+            this.toggleformredirect()
         })
         .catch(err=>console.log(err))
 
@@ -67,6 +71,9 @@ class App extends React.Component{
         })
         .then(jsonnedEntries => {
             this.setState({entries:jsonnedEntries});
+            return "next"
+        }).then(next =>{
+            this.toggleformredirect()
         })
         .catch(err=>console.log(err))
 
@@ -91,6 +98,12 @@ class App extends React.Component{
             // console.log(children);
         }
         this.setState({children:children})
+    }
+
+    toggleformredirect = () => {
+        this.setState({
+            formRedirect:!this.state.formRedirect
+        })
     }
 
     componentDidMount(){
@@ -143,20 +156,11 @@ class App extends React.Component{
                             children={this.state.children}
                             handleCreate={this.handleCreate}
                             handleUpdate={this.handleUpdate}
+                            formRedirect={this.state.formRedirect}
+                            toggleformredirect={this.toggleformredirect}
                         />
                     )}/>
-                    <Route exact path = "/new-child" render ={(props)=>{
 
-                        return(
-                            <Form
-                            displayName={this.state.user.displayName}
-                            userId={this.state.user.uid}
-                            form="newChild"
-                            handleCreate={this.handleCreate}
-                            />
-
-                        )
-                    }}/>
 
 
 

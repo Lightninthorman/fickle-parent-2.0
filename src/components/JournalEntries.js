@@ -14,14 +14,14 @@ class JournalEntries extends React.Component {
   render() {
     return (
        <div className="col-md-6">
-            <Link to={`/new-entry/${this.props.name}`} className="btn btn-success" onClick={this.props.toggleFormRedirect}>New Journal Entry</Link>
+            <Link to={`/new-entry/${this.props.name}`} className="btn btn-success" onClick={this.props.toggleformredirect} onClick={this.props.toggleformredirect}>New Journal Entry</Link>
             {this.props.entries.map((entry,key)=>{
                 if(entry.child_name === this.props.name){
                     return(<div key={key}>
                             <h3>{entry.child_name}</h3>
                             <h4>Journal Entry:</h4>
                             <p>{entry.journal_entry}</p>
-                            <Link className='btn btn-primary' to={`/update-entry/${entry.entry_id}`}>Update Entry</Link>
+                            <Link className='btn btn-primary' to={`/update-entry/${entry.entry_id}`} onClick={this.props.toggleformredirect}>Update Entry</Link>
                         </div>
                     )
                 }

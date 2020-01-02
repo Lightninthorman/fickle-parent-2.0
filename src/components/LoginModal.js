@@ -58,16 +58,16 @@ class Login extends React.Component {
                 {this.props.view === 'signup'?
                     <div className="form-group">
                         <label htmlFor="userName">Username</label>
-                        <input value={this.state.userName} onChange={this.handleChange} type="text" name="userName" className="form-control" id="userName" aria-describedby="userName" placeholder="Enter Username" />
+                        <input value={this.state.userName} onChange={this.handleChange} type="text" name="userName" className="form-control" id="userName" aria-describedby="userName" required placeholder="Enter Username" />
                     </div>
                 : null}
                 <div className="form-group">
                     <label htmlFor="email">Email address</label>
-                    <input value={this.state.email} onChange={this.handleChange} type="email" name="email" className="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" />
+                    <input value={this.state.email} onChange={this.handleChange} type="email" name="email" className="form-control" id="email" aria-describedby="emailHelp" required placeholder="Enter email" />
                 </div>
                 <div className="form-group">
                     <label htmlFor="password">Password</label>
-                    <input value={this.state.password} onChange={this.handleChange} type="password" name="password" className="form-control" id="password" placeholder="Password" />
+                    <input value={this.state.password} onChange={this.handleChange} type="password" name="password" className="form-control" id="password" required placeholder="Password" />
                 </div>
                 {this.props.view === 'login'?
                 <button type="submit" onClick={this.login} className="btn btn-primary">Login</button> :
