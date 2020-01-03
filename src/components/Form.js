@@ -72,10 +72,48 @@ class Form extends React.Component{
           return(
             <div className="form-check form-check-inline" key={key}>
                 <input onChange={()=>this.radioChange(subject,num)} className="form-check-input" type="radio" name={`${subject}_options`} id={`${subject}_${num}`} value={num} checked={this.state[subject] === num ? "checked" : ""}/>
-                <label className="form-check-label" htmlFor={`${subject}_${num}`}>{num}</label>
+                <label className="form-check-label" htmlFor={`${subject}_${num}`}>{num}
+                {num === 1 || num === 10 ? this.scaleDescription(subject,num): null}</label>
             </div>
           )
       })
+  }
+
+  scaleDescription = (subject,num) => {
+      if(num === 1){
+          switch(subject){
+                case 'behavior':
+                    return ' (poor)';
+                case 'helpful':
+                    return ' (no help)';
+                case 'respect' :
+                    return ' (respectless)'
+                case 'sleep' :
+                    return ' (awful night)';
+                case 'regret':
+                    return ' (regret it all)'
+
+
+          }
+      }else if(num === 10){
+          switch(subject){
+                case 'behavior':
+                    return ' (amazing)';
+                case 'helpful':
+                    return ' (awesome)';
+                case 'respect' :
+                    return ' (great)'
+                case 'sleep' :
+                    return ' (solid sleep)';
+                case 'regret':
+                    return ' (less regrets today)'
+
+
+          }
+      }
+
+
+
   }
 
   populateFormForUpdate = (entry,form) => {
@@ -126,17 +164,19 @@ class Form extends React.Component{
     render(){
 
         return(
-            <div>
+            <div className="formContainer container my-5 p-4 d-flex flex-column align-items-center">
             {this.props.userId ? null : <Redirect to="/login"/>}
             {this.props.formRedirect ? <Redirect to="/"/> : null}
             {!this.state.cancel ? null: this.state.child_name === "First Name of Child" ? <Redirect to="/"/> : <Redirect to={`/journal-entries/${this.state.child_name}`}/>}
                 <h3>{this.state.child_name}</h3>
                 <h4>Today is {this.state.entry_date}</h4>
                 <form onSubmit={this.handleSubmit}>
+                    {this.state.child_name === "First Name of Child" ?
                     <div className="form-group">
                         <label htmlFor="child_name">Child Name</label>
                         <input type="text" className="form-control" id="child_name" onChange={this.handleChange} aria-describedby="childName" placeholder={this.state.child_name}/>
                     </div>
+                    : null}
                     <div className="form-group">
                         <label htmlFor="journal_entry">Journal Entry</label>
                         <textarea className="form-control" id="journal_entry" onChange={this.handleChange} rows="6" defaultValue={this.state.journal_entry}></textarea>

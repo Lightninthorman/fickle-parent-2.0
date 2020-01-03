@@ -18,6 +18,15 @@ code {
     border:1px solid rgba(191,224,231,.01);
 }
 
+a{
+    color:black;
+}
+
+a:hover{
+    text-decoration: none;
+}
+
+
 /*
 =========
 Login Page and Form Styling
@@ -37,8 +46,9 @@ Login Page and Form Styling
 }
 
 .formContainer{
-    background-color:rgb(233,236,239);
+    background-color: rgb(55,96,105);
     border-radius:3px;
+    color:whitesmoke;
 }
 
 /*
@@ -75,6 +85,17 @@ Journal
     min-height: 75vh;
 }
 
+.journalPageContainer{
+    background-color: rgba(55,96,105,0.5);
+    padding: 25px;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.journalPageContainer h1{
+    color:whitesmoke;
+}
+
 .addChildBtn{
     background-color:saddlebrown;
     color:white;
@@ -92,4 +113,73 @@ Journal
     border-radius:2px;
     min-height: 75vh;
     border-radius:4px;
+}
+
+.entry{
+    width:100%;
+    border:2px solid rgba(169,169,169,0.5);
+    border-radius: 3px;
+    box-shadow: 3px 3px 3px rgb(105,105,105);
+}
+
+.details{
+    border:2px solid rgba(156,125,98,0.5);
+    border-radius: 3px;
+    box-shadow: 3px 3px 3px rgb(105,105,105);
+    min-width:45%;
+}
+
+/*
+=========
+Chart
+=========
+*/
+.chartContainer{
+    background-image:url("./images/chart_paper.jpg");
+    border-radius:3px;
+}
+
+.chartContainer h3{
+    background-color: rgba(233,236,239,0.8);
+    padding:20px;
+    border-radius: 3px;
+}
+
+.chartAvgs{
+background-color: rgb(233,236,239);
+box-sizing: border-box;
+border-radius: 3px;
+padding:20px;
+}
+
+.chartChildLink{
+    font-weight: normal;
+    font-size: 16px;
+    padding-left: 10px;
+}
+
+.lineChart{
+    background-color: rgb(233,236,239);
+    box-sizing: border-box;
+    border-radius: 3px;
+    padding:20px;
+}
+
+.childAvgChart{
+    background-color: rgb(233,236,239);
+    box-sizing: border-box;
+    border-radius: 3px;
+    padding:20px;
+    margin:20px 10px;
+    width: 100%;
+    height: 100%;
+}
+
+.childCharts{
+    background-color: rgb(233,236,239);
+    box-sizing: border-box;
+    border-radius: 3px;
+    padding:20px;
+    width:400px;
+    height:250px;
 }
