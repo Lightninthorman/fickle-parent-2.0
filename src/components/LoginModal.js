@@ -53,8 +53,8 @@ class Login extends React.Component {
   }
   render() {
     return (
-        <div className="col-md-6">
-            <form>
+        <div className=" min-vh-100 d-flex flex-column justify-content-center">
+            <form className="formContainer p-5">
                 {this.props.view === 'signup'?
                     <div className="form-group">
                         <label htmlFor="userName">Username</label>
@@ -69,12 +69,16 @@ class Login extends React.Component {
                     <label htmlFor="password">Password</label>
                     <input value={this.state.password} onChange={this.handleChange} type="password" name="password" className="form-control" id="password" required placeholder="Password" />
                 </div>
+                <div className="d-flex flex-row justify-content-center">
                 {this.props.view === 'login'?
-                <button type="submit" onClick={this.login} className="btn btn-primary">Login</button> :
-                <button onClick={this.signup} style={{marginLeft: '25px'}} className="btn btn-success">Signup</button>
+                <button type="submit" onClick={this.login} className="btn btn-primary btn-lg mx-4">Login</button> :
+                <button onClick={this.signup} style={{marginLeft: '25px'}} className="btn btn-success btn-lg mx-4">Signup</button>
             }
-                <button onClick={()=>this.props.handleView('options')}>Cancel</button>
-
+                <button
+                    className="btn btn-secondary btn-lg mx-4"
+                    onClick={()=>this.props.handleView('options')}>Cancel
+                </button>
+                </div>
 
             </form>
             {this.state.error ? <div className="alert alert-danger">{this.state.error} </div> : null}

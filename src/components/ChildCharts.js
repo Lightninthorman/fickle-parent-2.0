@@ -159,68 +159,82 @@ class ChildCharts extends React.Component {
         }else{
             console.log("childCharts redirect");
         }
-
+        window.scrollTo(0,0);
     }
+
 
 
   render() {
     return (
-       <div className="col-md-6">
+       <div className="chartContainer container my-5 p-4 d-flex flex-column align-items-center">
 
             <h3>Hi! You made it to {this.props.name}'s charts!</h3>
+            <div className="childChartContainer2 d-flex flex-row flex-wrap justify-content-center">
+            <div className="childAvgChart">
             <Line data = {this.state.overallLineChart} options = {this.state.chartOptions1}/>
+            </div>
+            <div className="childAvgChart">
             <Radar data ={this.state.radarChart} options = {this.state.chartOptions1} />
+            </div>
+            </div>
             <button onClick={this.changeChartType}>Change to {this.state.chartTypeLine ? 'bar' : 'line'} chart!</button>
-            {this.state.chartTypeLine ?
-                <Line data={this.state.behaviorChart}
-                    options={this.state.chartOptions1}
-                />
-            :
-                <Bar data={this.state.behaviorChart}
-                    options={this.state.chartOptions1}
-                />
-            }
-
-            {this.state.chartTypeLine ?
-                <Line data={this.state.helpfulChart}
-                    options={this.state.chartOptions1}
-                />
-            :
-                <Bar data={this.state.helpfulChart}
-                    options={this.state.chartOptions1}
-                />
-            }
-
-            {this.state.chartTypeLine ?
-                <Line data={this.state.respectChart}
-                    options={this.state.chartOptions1}
-                />
-            :
-                <Bar data={this.state.respectChart}
-                    options={this.state.chartOptions1}
-                />
-            }
-
-            {this.state.chartTypeLine ?
-                <Line data={this.state.sleepChart}
-                    options={this.state.chartOptions1}
-                />
-            :
-                <Bar data={this.state.sleepChart}
-                    options={this.state.chartOptions1}
-                />
-            }
-
-            {this.state.chartTypeLine ?
-                <Line data={this.state.regretChart}
-                    options={this.state.chartOptions1}
-                />
-            :
-                <Bar data={this.state.regretChart}
-                    options={this.state.chartOptions1}
-                />
-            }
-
+            <div className="childChartContainer2 d-flex flex-row flex-wrap justify-content-center">                
+                <div className="childCharts m-2">
+                    {this.state.chartTypeLine ?
+                        <Line data={this.state.behaviorChart}
+                            options={this.state.chartOptions1}
+                        />
+                    :
+                        <Bar data={this.state.behaviorChart}
+                            options={this.state.chartOptions1}
+                        />
+                    }
+                </div>
+                <div className="childCharts m-2">
+                    {this.state.chartTypeLine ?
+                        <Line data={this.state.helpfulChart}
+                            options={this.state.chartOptions1}
+                        />
+                    :
+                        <Bar data={this.state.helpfulChart}
+                            options={this.state.chartOptions1}
+                        />
+                    }
+                </div>
+                <div className="childCharts m-2">
+                    {this.state.chartTypeLine ?
+                        <Line data={this.state.respectChart}
+                            options={this.state.chartOptions1}
+                        />
+                    :
+                        <Bar data={this.state.respectChart}
+                            options={this.state.chartOptions1}
+                        />
+                    }
+                </div>
+                <div className="childCharts m-2">
+                    {this.state.chartTypeLine ?
+                        <Line data={this.state.sleepChart}
+                            options={this.state.chartOptions1}
+                        />
+                    :
+                        <Bar data={this.state.sleepChart}
+                            options={this.state.chartOptions1}
+                        />
+                    }
+                </div>
+                <div className="childCharts m-2">
+                    {this.state.chartTypeLine ?
+                        <Line data={this.state.regretChart}
+                            options={this.state.chartOptions1}
+                        />
+                    :
+                        <Bar data={this.state.regretChart}
+                            options={this.state.chartOptions1}
+                        />
+                    }
+                </div>
+            </div>
       </div>
     );
   }

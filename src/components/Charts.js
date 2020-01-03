@@ -35,8 +35,8 @@ class Charts extends React.Component {
                 label:data.child,
                 data:[overallAverage, (100-overallAverage)],
                 backgroundColor: [
+                "rgb(34, 179, 57)",
                 "rgb(255, 99, 132)",
-                "rgb(54, 162, 235)",
                 "rgb(255, 205, 86)"
                 ]
             }]
@@ -58,13 +58,18 @@ class Charts extends React.Component {
                 data:[],
                 fill:true,
                 backgroundColor: `rgba(${red},${green},${blue},0.4)`,
-                borderColor:`rgb(${red},${green},${blue})`
+                borderColor:`rgb(${red},${green},${blue})`,
+                spanGaps:true
 
             };
+
             childData.label = data[i].child;
                 for(let x = 0; x < data[i].dates.length; x++){
                     let dailyAvg = (data[i].behaviorData[x] + data[i].helpfulData[x] + data[i].respectData[x] + data[i].sleepData[x] + data[i].regretData[x])/ 5
                     childData.data.push(dailyAvg)
+                }
+                while(lineLabels.length !== childData.data.length){
+                    childData.data.unshift("")
                 }
                 lineDatasets.push(childData);
             }
@@ -124,46 +129,45 @@ class Charts extends React.Component {
         }else{
             console.log("hi");
         }
+        window.scrollTo(0,0);
     }
 
   render() {
     return (
-        <div className="col-md-6">
-            <div>
-                {this.props.children.map((child,key)=>(
-                    <Link key={key} to={`/charts/${child}`}> {child} Chart</Link>
-                ))}
-
+        <div className="chartContainer container my-5 p-4 d-flex flex-column align-items-center">
+            <div className="d-flex flex-row flex-wrap">
+                {this.state.allData.map((entry,key)=>(
+                <Link key={key} to={`/charts/${entry.child}`} onClick={()=>this.props.changeFetching(true)}>
+                <div className="chartAvgs m-3">
+                <h3>{entry.child} <span className="chartChildLink">(click for details)</span></h3>
+                <Doughnut data = {this.getOverallAverage(entry)} options = {{
+                    circumference: Math.PI,
+                    rotation : Math.PI,
+                    cutoutPercentage : 55,
+                    legend:{
+                        display:false
+                    }
+                        }}
+                />
+                <h3>{average}%</h3>
+                </div>
+                </Link>))}
             </div>
-            {this.state.allData.map((entry,key)=>(
-            <Link key={key} to={`/charts/${entry.child}`} onClick={()=>this.props.changeFetching(true)}>
-            <div>
-            <h3 >{entry.child}</h3>
-            <Doughnut data = {this.getOverallAverage(entry)} options = {{
-                circumference: Math.PI,
-                rotation : Math.PI,
-                cutoutPercentage : 55,
-                legend:{
-                    display:false
-                }
-                    }}
-            />
-            <h3>{average}%</h3>
-            </div>
-            </Link>))}
-        <Line
-            data={lineDataCompareAll} options={{
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            min:0,
-                            max:10
+            <div className="lineChart w-75">
+                <Line
+                    data={lineDataCompareAll} options={{
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    min:0,
+                                    max:10
+                                }
+                            }]
                         }
-                    }]
-                }
-            }}
+                    }}
 
-        />
+                />
+            </div>
       </div>
     );
   }
