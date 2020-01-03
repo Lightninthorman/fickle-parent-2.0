@@ -6,15 +6,15 @@ import {Link} from 'react-router-dom';
 class JournalEntries extends React.Component {
 
 
-    // componentDidMount(){
-    //     // setTimeout(this.fetchEntries,1100);
-    //     // this.findChildren()
-    // }
+    componentDidMount(){
+        window.scrollTo(0,0);
+    }
 
   render() {
     return (
-       <div className="col-md-6">
-            <Link to={`/new-entry/${this.props.name}`} className="btn btn-success" onClick={this.props.toggleformredirect} onClick={this.props.toggleformredirect}>New Journal Entry</Link>
+       <div className="container mt-5 d-flex flex-column align-items-start">
+            <Link to={`/new-entry/${this.props.name}`} className="btn btn-success" onClick={this.props.toggleformredirect}>New Journal Entry</Link>
+            <div className="page d-flex flex-column align-items-start p-4 mt-3">
             {this.props.entries.map((entry,key)=>{
                 if(entry.child_name === this.props.name){
                     return(<div key={key}>
@@ -27,6 +27,7 @@ class JournalEntries extends React.Component {
                 }
 
             })}
+            </div>
 
       </div>
     );

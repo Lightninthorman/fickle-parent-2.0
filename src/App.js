@@ -149,6 +149,7 @@ class App extends React.Component{
             }
 
         }
+        window.scrollTo(0,0);
         // console.log("updateState",this.state.user.displayName);
     }
 
@@ -199,7 +200,10 @@ class App extends React.Component{
                         <Route exact path = "/journal-entries/:name" render ={(props)=>{
                             let name = props.location.pathname.replace('/journal-entries/','');
                             return(
-                                <JournalEntries name={name} entries={this.state.entries}/>
+                                <JournalEntries
+                                name={name} entries={this.state.entries}
+                                changeFetching={this.changeFetching}
+                                />
                             )
                         }}/>
                         <Route exact path = "/new-child" render ={(props)=>{
@@ -260,6 +264,7 @@ class App extends React.Component{
                                     children={this.state.children}
                                     childData={this.state.childData}
                                     fetching={this.fetching}
+
                                     />
                             )
                         }}/>

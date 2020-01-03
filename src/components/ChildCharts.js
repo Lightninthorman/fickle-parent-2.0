@@ -159,7 +159,7 @@ class ChildCharts extends React.Component {
         }else{
             console.log("childCharts redirect");
         }
-
+        window.scrollTo(0,0);
     }
 
 

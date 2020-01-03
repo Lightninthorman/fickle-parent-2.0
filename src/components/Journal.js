@@ -12,17 +12,10 @@ class Journal extends React.Component {
     constructor(props){
         super(props);
         this.state ={
-            child:'Isaac',
-            view:'journal',
+
             children: [],
             childData:[]
         }
-    }
-
-    handleView = (view) => {
-        this.setState({
-            view:view
-        })
     }
 
     logout = () => {
@@ -36,7 +29,9 @@ class Journal extends React.Component {
         console.log(data[0].child);
     }
 
-
+componentDidMount(){
+    window.scrollTo(0,0);
+}
 
   render() {
     return (

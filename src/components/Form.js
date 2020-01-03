@@ -21,7 +21,8 @@ class Form extends React.Component{
         sleep:10,
         sleep_desc:"",
         regret:10,
-        regret_desc:""
+        regret_desc:"",
+        cancel:false
 
     }
   }
@@ -36,6 +37,12 @@ class Form extends React.Component{
 
   handleChange = (e) => {
     this.setState({[e.target.id] : e.target.value})
+  }
+
+  toggleCancel = ()=>{
+      this.setState({
+          cancel:!this.state.cancel
+      })
   }
 
   radioChange = (item,value)=>{
@@ -108,7 +115,12 @@ class Form extends React.Component{
 
   componentDidMount(){
 
-      this.populateFormForUpdate(this.props.entry, this.props.form)
+      this.populateFormForUpdate(this.props.entry, this.props.form);
+      window.scrollTo(0,0)
+  }
+
+  componentWillUnmount(){
+      this.toggleCancel();
   }
 
     render(){
@@ -117,6 +129,7 @@ class Form extends React.Component{
             <div>
             {this.props.userId ? null : <Redirect to="/login"/>}
             {this.props.formRedirect ? <Redirect to="/"/> : null}
+            {!this.state.cancel ? null: this.state.child_name === "First Name of Child" ? <Redirect to="/"/> : <Redirect to={`/journal-entries/${this.state.child_name}`}/>}
                 <h3>{this.state.child_name}</h3>
                 <h4>Today is {this.state.entry_date}</h4>
                 <form onSubmit={this.handleSubmit}>
@@ -165,6 +178,9 @@ class Form extends React.Component{
                     </div>
 
                     <button type="submit" className="btn btn-primary">Submit</button>
+
+                    <button type="button" className="btn btn-secondary" onClick={this.toggleCancel}>Cancel</button>
+
                 </form>
             </div>
         )

@@ -47,7 +47,7 @@ Navbar
 =========
 */
 .navbar{
-    height:75px;
+    min-height:75px;
     background-color:rgb(233,236,239);
     position: -webkit-sticky; /* Safari */
     position: sticky;
@@ -67,8 +67,10 @@ Journal
 =========
 */
 .journal{
-    background-image:url("./images/journal_paper.jpg");
-    background-size:cover;
+    background-image:url("./images/journal_cover.png");
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-position: center;
     border-radius:2px;
     min-height: 75vh;
 }
@@ -81,4 +83,13 @@ Journal
 .childBtn{
     background-color:peru;
     color:white;
+}
+
+.page{
+    background-image:url("./images/journal_paper.jpg");
+    background-size:cover;
+    background-repeat: no-repeat;
+    border-radius:2px;
+    min-height: 75vh;
+    border-radius:4px;
 }

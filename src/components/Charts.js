@@ -129,6 +129,7 @@ class Charts extends React.Component {
         }else{
             console.log("hi");
         }
+        window.scrollTo(0,0);
     }
 
   render() {
