@@ -22,7 +22,8 @@ class Form extends React.Component{
         sleep_desc:"",
         regret:10,
         regret_desc:"",
-        cancel:false
+        cancel:false,
+        formType:""
 
     }
   }
@@ -136,15 +137,20 @@ class Form extends React.Component{
               sleep:entry.sleep,
               sleep_desc:entry.sleep_desc,
               regret:entry.regret,
-              regret_desc:entry.regret_desc
+              regret_desc:entry.regret_desc,
+              formType:form
           })
 
       }else if(form === 'newEntry'){
           this.getDateAndUser()
           this.setState({
-              child_name:this.props.name
+              child_name:this.props.name,
+              formType:form
           })
       }else if(form === 'newChild'){
+          this.setState({
+              formType:form
+          })
           this.getDateAndUser()
       }
   }
@@ -171,7 +177,7 @@ class Form extends React.Component{
                 <h3>{this.state.child_name}</h3>
                 <h4>Today is {this.state.entry_date}</h4>
                 <form onSubmit={this.handleSubmit}>
-                    {this.state.child_name === "First Name of Child" ?
+                    {this.state.formType === 'newChild' ?
                     <div className="form-group">
                         <label htmlFor="child_name">Child Name</label>
                         <input type="text" className="form-control" id="child_name" onChange={this.handleChange} aria-describedby="childName" placeholder={this.state.child_name}/>
