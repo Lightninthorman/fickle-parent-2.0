@@ -28,7 +28,10 @@ class JournalEntries extends React.Component {
     return (
        <div className="container journalPageContainer mt-5 d-flex flex-column align-items-start">
             <h1>{this.props.name}</h1>
-            <Link to={`/new-entry/${this.props.name}`} className="btn btn-success" onClick={this.props.toggleformredirect}>New Journal Entry</Link>
+            <div className="d-flex flex-row justify-content-between w-100">
+                <Link to={`/new-entry/${this.props.name}`} className="btn btn-success" onClick={this.props.toggleformredirect}>New Journal Entry</Link>
+                <Link to='/'><button type="button" className="btn btn-outline-light" onClick={() => this.props.handleDelete(this.props.name)}>Remove Child</button></Link>
+            </div>
             <div className="page d-flex flex-column align-items-start p-4 mt-3">
             {this.props.entries.map((entry,key)=>{
                 if(entry.child_name === this.props.name){

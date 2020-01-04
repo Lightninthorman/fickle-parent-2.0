@@ -82,7 +82,9 @@ Journal
     background-repeat: no-repeat;
     background-position: center;
     border-radius:2px;
-    min-height: 75vh;
+    width:483px;
+    min-height: 640px;
+    /* border: 1px solid black; */
 }
 
 .journalPageContainer{
@@ -112,6 +114,7 @@ Journal
     background-repeat: no-repeat;
     border-radius:2px;
     min-height: 75vh;
+    width: 100%;
     border-radius:4px;
 }
 

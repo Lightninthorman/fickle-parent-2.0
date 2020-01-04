@@ -88,6 +88,23 @@ class App extends React.Component{
 
     }
 
+    handleDelete = (name) => {
+        fetch(`${baseUrl}${this.state.user.uid}/${name}`,{
+            method:'DELETE',
+            headers:{
+                'Accept': 'application/json, text/plain, */*', 'Content-Type':'applicaiont/json'
+            }
+        })
+        .then(returnedEntries => {
+            return returnedEntries.json()
+        })
+        .then(jsonnedEntries => {
+            this.setState({entries:jsonnedEntries});
+            this.findChildren(jsonnedEntries);
+        })
+        .catch(err=>console.log(err))
+
+    }
 
     findChildren = (data) => {
 
@@ -156,7 +173,7 @@ class App extends React.Component{
     authListener = () =>{
 
             firebase.auth().onAuthStateChanged((user)=>{
-                // console.log("authchanged");
+
                 if(user){
                     this.setState({
                         user:user
@@ -203,6 +220,7 @@ class App extends React.Component{
                                 <JournalEntries
                                 name={name} entries={this.state.entries}
                                 changeFetching={this.changeFetching}
+                                handleDelete={this.handleDelete}
                                 />
                             )
                         }}/>
