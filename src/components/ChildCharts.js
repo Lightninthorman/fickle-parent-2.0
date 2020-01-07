@@ -1,5 +1,5 @@
 import React from 'react';
-import {Bar,Line,Doughnut,Radar} from 'react-chartjs-2';
+import {Bar,Line,Radar} from 'react-chartjs-2';
 import {Link} from 'react-router-dom';
 
 
@@ -224,7 +224,7 @@ class ChildCharts extends React.Component {
             <Radar data ={this.state.radarChart} options = {this.state.chartOptions2} />
             </div>
             </div>
-            <button onClick={this.changeChartType}>Change to {this.state.chartTypeLine ? 'bar' : 'line'} chart!</button>
+            <button onClick={this.changeChartType} className="btn btn-info">Change to {this.state.chartTypeLine ? 'bar' : 'line'} chart!</button>
             <div className="childChartContainer2 d-flex flex-row flex-wrap justify-content-center">
                 <div className="childCharts m-2">
                     {this.state.chartTypeLine ?

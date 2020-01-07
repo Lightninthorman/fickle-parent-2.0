@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link, Redirect} from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 
 // let today =
 
@@ -81,9 +81,9 @@ class Email extends React.Component{
                     <label htmlFor="child_email">Please enter Email</label>
                     <input type="email" className="form-control" id="child_email" onChange={this.addEmail} aria-describedby="childEmail" required/>
                 </div>
-                <button type="submit" className="btn btn-primary">Submit</button>
+                <button type="submit" className="btn btn-primary mx-2">Submit</button>
 
-                <button type="button" className="btn btn-secondary" onClick={this.toggleCancel}>Cancel</button>
+                <button type="button" className="btn btn-secondary mx-2" onClick={this.toggleCancel}>Cancel</button>
             </form>
             <div className="emailBody">
                 <p>Hi {this.state.child}!</p>

@@ -19,7 +19,7 @@ class Login extends React.Component {
 
   render() {
     return (
-        <div className="login d-flex flex-column align-items-center min-vh-100">
+        <div className="login container d-flex flex-column align-items-center min-vh-100">
             {this.state.view === 'login' ?
                 <LoginModal view={this.state.view} handleView={this.handleView} />
             :
@@ -40,8 +40,30 @@ class Login extends React.Component {
                                 </button>
                             </div>
                         </div>
-                        <div className="productHighlights">
-                            <h1>Hello World!</h1>
+                        <div className="productHighlights w-75 d-flex flex-row flex-wrap justify-content-center">
+                            <div className="highlights m-2 p-2">
+                                <h3>Daily Journal</h3>
+                                <p>Kids say and do the darndest things. Keep track of those precious moments with the Fickle Parent online journal. The hours are long, but the years fly by. Now you can remember the little things that are so easily forgotten.
+                                </p>
+                            </div>
+                            <div className="highlights m-2 p-2">
+                                <h3>Child Chart Tracker</h3>
+                                <p>
+                                Rate each child's day in five different categories. The Fickle Parent app will analayze the data and provide you with a variety of charts to determine the child's strengths and weakness related to your overall approval.
+                                </p>
+                            </div>
+                            <div className="highlights m-2 p-2">
+                                <h3>Got Siblings?</h3>
+                                <p>
+                                The ability to chart and compare siblings provides parents with a direct way to determine which child is the favorite. Parents no longer need to lie and say they love each child the same as they now have hard, cold data to back up their choice.
+                                </p>
+                            </div>
+                            <div className="highlights m-2 p-2">
+                                <h3>Send Updates</h3>
+                                <p>
+                                Parents can send emails to each child informing them of their current rank and lowest performing category to help encourage improvements in that area. Children love the daily reminders of their standings and use the emails as motivation to prove their worth to their parents.
+                                </p>
+                            </div>
                         </div>
                     </div>
             }

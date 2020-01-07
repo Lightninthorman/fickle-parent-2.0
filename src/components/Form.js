@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link, Redirect} from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 
 // let today =
 
@@ -163,7 +163,7 @@ class Form extends React.Component{
       window.scrollTo(0,0)
   }
 
- 
+
 
     render(){
 
@@ -177,12 +177,12 @@ class Form extends React.Component{
                 <form onSubmit={this.handleSubmit}>
                     {this.state.formType === 'newChild' ?
                     <div className="form-group">
-                        <label htmlFor="child_name">Child Name</label>
+                        <label htmlFor="child_name"><h4>Child Name</h4></label>
                         <input type="text" className="form-control" id="child_name" onChange={this.handleChange} aria-describedby="childName" placeholder={this.state.child_name}/>
                     </div>
                     : null}
                     <div className="form-group">
-                        <label htmlFor="journal_entry">Journal Entry</label>
+                        <label htmlFor="journal_entry"><h4>Journal Entry</h4></label>
                         <textarea className="form-control" id="journal_entry" onChange={this.handleChange} rows="4" defaultValue={this.state.journal_entry}></textarea>
                     </div>
                     <h3>Rate your child's day:</h3>
@@ -221,9 +221,9 @@ class Form extends React.Component{
                         <textarea className="form-control" id="regret_desc" onChange={this.handleChange} rows="3" defaultValue={this.state.regret_desc}></textarea>
                     </div>
 
-                    <button type="submit" className="btn btn-primary">Submit</button>
+                    <button type="submit" className="btn btn-primary mx-2">Submit</button>
 
-                    <button type="button" className="btn btn-secondary" onClick={this.toggleCancel}>Cancel</button>
+                    <button type="button" className="btn btn-secondary mx-2" onClick={this.toggleCancel}>Cancel</button>
 
                 </form>
             </div>
