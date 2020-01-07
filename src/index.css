@@ -13,7 +13,7 @@ code {
 }
 
 .main{
-    background-image:url("./images/App.jpeg");
+    background-image:url("./images/App2.jpg");
     background-size:cover;
     border:1px solid rgba(191,224,231,.01);
 }
@@ -34,7 +34,7 @@ Login Page and Form Styling
 */
 
 .login{
-    background-image:url("./images/App.jpeg");
+    background-image:url("./images/App2.jpg");
     background-size:cover;
     background-position: center;
 

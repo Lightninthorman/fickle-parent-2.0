@@ -1,5 +1,6 @@
 import React from 'react';
 import {Bar,Line,Doughnut,Radar} from 'react-chartjs-2';
+import {BrowserRouter as Router, Route, Switch,Link} from 'react-router-dom';
 
 
 
@@ -9,6 +10,7 @@ class ChildCharts extends React.Component {
         this.state = {
             data:{},
             overallAverage:0,
+            lowestAvg:'',
             chartTypeLine:true,
             chartOptions1:{
                 scales: {
@@ -18,6 +20,14 @@ class ChildCharts extends React.Component {
                             max:10
                         }
                     }]
+                }
+            },
+            chartOptions2:{
+                scale:{
+                    ticks:{
+                        min:0,
+                        max:10
+                    }
                 }
             },
             radarChart:{
@@ -118,6 +128,29 @@ class ChildCharts extends React.Component {
 
         const overallAverage = ((behaviorAvg + helpfulAvg +respectAvg + sleepAvg + regretAvg)/5)*10;
 
+        let avgArray = [behaviorAvg,helpfulAvg,respectAvg,sleepAvg,regretAvg];
+        let needsImprovement = "";
+
+        switch(avgArray.indexOf(Math.min(...avgArray))){
+            case 0:
+            needsImprovement = "Behavior";
+            break;
+            case 1:
+            needsImprovement = "Helpful";
+            break;
+            case 2:
+            needsImprovement = "Respect";
+            break;
+            case 3:
+            needsImprovement = "Sleep";
+            break;
+            case 4:
+            needsImprovement = "Just a general attitude adjustment";
+            break;
+        }
+
+        console.log(needsImprovement);
+
         let overallLineData =[];
         for(let i = 0; i < data.dates.length; i++){
             let dailyAvg = (data.behaviorData[i] + data.helpfulData[i] + data.respectData[i] + data.sleepData[i] + data.regretData[i])/5;
@@ -125,6 +158,7 @@ class ChildCharts extends React.Component {
         }
         this.setState({
             overallAverage:overallAverage,
+            lowestAvg:needsImprovement,
             radarChart:{
                 labels:["Behavior","Helpful","Respect","Sleep","Regret"],
                 datasets:[{
@@ -169,16 +203,36 @@ class ChildCharts extends React.Component {
        <div className="chartContainer container my-5 p-4 d-flex flex-column align-items-center">
 
             <h3>Hi! You made it to {this.props.name}'s charts!</h3>
+            <Router>
+                <Link to={`/email/${this.props.name}`} className="btn btn-primary">Send Email</Link>
+
+                <Switch>
+                <Route exact path = "/email/:name" render ={(props)=>{
+                    let child = props.location.pathname.replace('/email/','');
+                    return(
+                        <ChildCharts
+                            child={child}
+                            email={this.props.email}
+                            rank={this.props.rank}
+                            score={this.state.overallAverage}
+                            lowestAvg={this.state.lowestAvg}
+
+                            />
+                    )
+                }}/>
+                </Switch>
+            </Router>
+
             <div className="childChartContainer2 d-flex flex-row flex-wrap justify-content-center">
             <div className="childAvgChart">
             <Line data = {this.state.overallLineChart} options = {this.state.chartOptions1}/>
             </div>
             <div className="childAvgChart">
-            <Radar data ={this.state.radarChart} options = {this.state.chartOptions1} />
+            <Radar data ={this.state.radarChart} options = {this.state.chartOptions2} />
             </div>
             </div>
             <button onClick={this.changeChartType}>Change to {this.state.chartTypeLine ? 'bar' : 'line'} chart!</button>
-            <div className="childChartContainer2 d-flex flex-row flex-wrap justify-content-center">                
+            <div className="childChartContainer2 d-flex flex-row flex-wrap justify-content-center">
                 <div className="childCharts m-2">
                     {this.state.chartTypeLine ?
                         <Line data={this.state.behaviorChart}

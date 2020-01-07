@@ -23,9 +23,8 @@ class App extends React.Component{
             entries:[],
             children:[],
             formRedirect:false,
-            child:'Isaac',
-            view:'journal',
-            childData:[]
+            childData:[],
+            ranking:[]
         }
     }
 
@@ -147,6 +146,13 @@ class App extends React.Component{
             childData:data
         })
         console.log(data[0].child);
+    }
+
+    getRankings = (childAndRank) =>{
+        console.log(childAndRank);
+        this.setState({
+            ranking:childAndRank
+        })
     }
 
     changeFetching = (bool) => {
@@ -271,6 +277,7 @@ class App extends React.Component{
                             getChildData={this.getChildData}
                             fetching={this.fetching}
                             changeFetching={this.changeFetching}
+                            getRankings={this.getRankings}
                             />
                         )}/>
 
@@ -282,6 +289,7 @@ class App extends React.Component{
                                     children={this.state.children}
                                     childData={this.state.childData}
                                     fetching={this.fetching}
+                                    email={this.state.user.email}
 
                                     />
                             )

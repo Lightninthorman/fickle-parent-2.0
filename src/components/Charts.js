@@ -11,6 +11,8 @@ let lineDataCompareAll = {
 
 let average = 0
 
+let rankings=[]
+
 
 class Charts extends React.Component {
     constructor(props){
@@ -42,6 +44,16 @@ class Charts extends React.Component {
             }]
         }
         average = overallAverage.toFixed(1);
+        let rankInfo = {
+            child:data.child,
+            average:average
+        }
+
+        let childExists = rankings.some(kid=>kid.child === data.child);
+        if(!childExists){
+            rankings.push(rankInfo);
+        }
+
         return  gaugeChartData
 
     }
@@ -117,7 +129,8 @@ class Charts extends React.Component {
             this.getOverallAverage(newData[y])
         }
 
-        this.props.getChildData(newData)
+        this.props.getChildData(newData);
+
 
     }
 
@@ -125,7 +138,8 @@ class Charts extends React.Component {
         // setTimeout(this.fetchEntries,1100);
         // this.findChildren()
         if(this.props.fetching){
-            this.getAllData()
+            this.getAllData();
+            this.props.getRankings(rankings);
         }else{
             console.log("hi");
         }
