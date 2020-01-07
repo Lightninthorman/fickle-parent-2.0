@@ -186,3 +186,16 @@ padding:20px;
     width:400px;
     height:250px;
 }
+
+/*
+=========
+Email
+=========
+*/
+.emailBody{
+    background-color:#94AFB5;
+    color: black;
+    padding:20px;
+    margin:20px 0;
+    border-radius: 3px;
+}

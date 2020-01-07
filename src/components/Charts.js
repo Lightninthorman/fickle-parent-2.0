@@ -95,7 +95,7 @@ class Charts extends React.Component {
 
 
     getAllData = () => {
-        console.log("called");
+        // console.log("called");
         let newData = [];
         for(let i = 0; i < this.props.children.length; i++){
             let childBehaviorData = {
@@ -119,7 +119,7 @@ class Charts extends React.Component {
             }
             newData.push(childBehaviorData);
         }
-        console.log(newData);
+        // console.log(newData);
 
         this.setState({
             allData:newData

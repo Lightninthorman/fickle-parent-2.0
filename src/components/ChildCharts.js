@@ -1,6 +1,7 @@
 import React from 'react';
 import {Bar,Line,Doughnut,Radar} from 'react-chartjs-2';
-import {BrowserRouter as Router, Route, Switch,Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
+
 
 
 
@@ -65,6 +66,7 @@ class ChildCharts extends React.Component {
         const data = allData.find(kid =>{
             return kid.child === this.props.name
         })
+        // console.log('data',data);
         this.setState({
             data:data,
             behaviorChart:{
@@ -113,7 +115,8 @@ class ChildCharts extends React.Component {
                 }]
             }
         })
-        this.getAverages(data)
+        this.getAverages(data);
+
     }
 
     getAverages =(data) => {
@@ -133,29 +136,30 @@ class ChildCharts extends React.Component {
 
         switch(avgArray.indexOf(Math.min(...avgArray))){
             case 0:
-            needsImprovement = "Behavior";
+            needsImprovement = "improving your behavior";
             break;
             case 1:
-            needsImprovement = "Helpful";
+            needsImprovement = "being more helpful";
             break;
             case 2:
-            needsImprovement = "Respect";
+            needsImprovement = "showing more respect";
             break;
             case 3:
-            needsImprovement = "Sleep";
+            needsImprovement = "letting me get more sleep";
             break;
             case 4:
-            needsImprovement = "Just a general attitude adjustment";
+            needsImprovement = "changing your attitude so I regret my decisions a little less";
             break;
         }
 
-        console.log(needsImprovement);
+        // console.log(needsImprovement);
 
         let overallLineData =[];
         for(let i = 0; i < data.dates.length; i++){
             let dailyAvg = (data.behaviorData[i] + data.helpfulData[i] + data.respectData[i] + data.sleepData[i] + data.regretData[i])/5;
             overallLineData.push(dailyAvg);
         }
+
         this.setState({
             overallAverage:overallAverage,
             lowestAvg:needsImprovement,
@@ -178,6 +182,12 @@ class ChildCharts extends React.Component {
                     borderColor:`rgb(${red},${green},${blue})`
                 }]
             }
+        });
+
+        this.props.emailInfo({
+            name:this.props.name,
+            overallAverage:overallAverage,
+            lowestAvg:needsImprovement,
         })
     }
 
@@ -203,25 +213,8 @@ class ChildCharts extends React.Component {
        <div className="chartContainer container my-5 p-4 d-flex flex-column align-items-center">
 
             <h3>Hi! You made it to {this.props.name}'s charts!</h3>
-            <Router>
-                <Link to={`/email/${this.props.name}`} className="btn btn-primary">Send Email</Link>
 
-                <Switch>
-                <Route exact path = "/email/:name" render ={(props)=>{
-                    let child = props.location.pathname.replace('/email/','');
-                    return(
-                        <ChildCharts
-                            child={child}
-                            email={this.props.email}
-                            rank={this.props.rank}
-                            score={this.state.overallAverage}
-                            lowestAvg={this.state.lowestAvg}
-
-                            />
-                    )
-                }}/>
-                </Switch>
-            </Router>
+            <Link to={`/email/${this.props.name}`} className="btn btn-primary">Send Email</Link>
 
             <div className="childChartContainer2 d-flex flex-row flex-wrap justify-content-center">
             <div className="childAvgChart">
