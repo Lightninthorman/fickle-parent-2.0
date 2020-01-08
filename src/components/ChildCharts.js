@@ -1,5 +1,7 @@
 import React from 'react';
-import {Bar,Line,Doughnut,Radar} from 'react-chartjs-2';
+import {Bar,Line,Radar} from 'react-chartjs-2';
+import {Link} from 'react-router-dom';
+
 
 
 
@@ -9,6 +11,7 @@ class ChildCharts extends React.Component {
         this.state = {
             data:{},
             overallAverage:0,
+            lowestAvg:'',
             chartTypeLine:true,
             chartOptions1:{
                 scales: {
@@ -18,6 +21,14 @@ class ChildCharts extends React.Component {
                             max:10
                         }
                     }]
+                }
+            },
+            chartOptions2:{
+                scale:{
+                    ticks:{
+                        min:0,
+                        max:10
+                    }
                 }
             },
             radarChart:{
@@ -55,6 +66,7 @@ class ChildCharts extends React.Component {
         const data = allData.find(kid =>{
             return kid.child === this.props.name
         })
+        // console.log('data',data);
         this.setState({
             data:data,
             behaviorChart:{
@@ -103,7 +115,8 @@ class ChildCharts extends React.Component {
                 }]
             }
         })
-        this.getAverages(data)
+        this.getAverages(data);
+
     }
 
     getAverages =(data) => {
@@ -118,13 +131,38 @@ class ChildCharts extends React.Component {
 
         const overallAverage = ((behaviorAvg + helpfulAvg +respectAvg + sleepAvg + regretAvg)/5)*10;
 
+        let avgArray = [behaviorAvg,helpfulAvg,respectAvg,sleepAvg,regretAvg];
+        let needsImprovement = "";
+
+        switch(avgArray.indexOf(Math.min(...avgArray))){
+            case 0:
+            needsImprovement = "improving your behavior";
+            break;
+            case 1:
+            needsImprovement = "being more helpful";
+            break;
+            case 2:
+            needsImprovement = "showing more respect";
+            break;
+            case 3:
+            needsImprovement = "letting me get more sleep";
+            break;
+            case 4:
+            needsImprovement = "changing your attitude so I regret my decisions a little less";
+            break;
+        }
+
+        // console.log(needsImprovement);
+
         let overallLineData =[];
         for(let i = 0; i < data.dates.length; i++){
             let dailyAvg = (data.behaviorData[i] + data.helpfulData[i] + data.respectData[i] + data.sleepData[i] + data.regretData[i])/5;
             overallLineData.push(dailyAvg);
         }
+
         this.setState({
             overallAverage:overallAverage,
+            lowestAvg:needsImprovement,
             radarChart:{
                 labels:["Behavior","Helpful","Respect","Sleep","Regret"],
                 datasets:[{
@@ -144,6 +182,12 @@ class ChildCharts extends React.Component {
                     borderColor:`rgb(${red},${green},${blue})`
                 }]
             }
+        });
+
+        this.props.emailInfo({
+            name:this.props.name,
+            overallAverage:overallAverage,
+            lowestAvg:needsImprovement,
         })
     }
 
@@ -169,16 +213,19 @@ class ChildCharts extends React.Component {
        <div className="chartContainer container my-5 p-4 d-flex flex-column align-items-center">
 
             <h3>Hi! You made it to {this.props.name}'s charts!</h3>
+
+            <Link to={`/email/${this.props.name}`} className="btn btn-primary">Send Email</Link>
+
             <div className="childChartContainer2 d-flex flex-row flex-wrap justify-content-center">
             <div className="childAvgChart">
             <Line data = {this.state.overallLineChart} options = {this.state.chartOptions1}/>
             </div>
             <div className="childAvgChart">
-            <Radar data ={this.state.radarChart} options = {this.state.chartOptions1} />
+            <Radar data ={this.state.radarChart} options = {this.state.chartOptions2} />
             </div>
             </div>
-            <button onClick={this.changeChartType}>Change to {this.state.chartTypeLine ? 'bar' : 'line'} chart!</button>
-            <div className="childChartContainer2 d-flex flex-row flex-wrap justify-content-center">                
+            <button onClick={this.changeChartType} className="btn btn-info">Change to {this.state.chartTypeLine ? 'bar' : 'line'} chart!</button>
+            <div className="childChartContainer2 d-flex flex-row flex-wrap justify-content-center">
                 <div className="childCharts m-2">
                     {this.state.chartTypeLine ?
                         <Line data={this.state.behaviorChart}

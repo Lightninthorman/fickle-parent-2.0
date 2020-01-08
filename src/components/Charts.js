@@ -1,6 +1,6 @@
 import React from 'react';
 import {Line,Doughnut} from 'react-chartjs-2';
-import {Link, Redirect} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 
 
@@ -10,6 +10,8 @@ let lineDataCompareAll = {
 }
 
 let average = 0
+
+let rankings=[]
 
 
 class Charts extends React.Component {
@@ -42,6 +44,16 @@ class Charts extends React.Component {
             }]
         }
         average = overallAverage.toFixed(1);
+        let rankInfo = {
+            child:data.child,
+            average:average
+        }
+
+        let childExists = rankings.some(kid=>kid.child === data.child);
+        if(!childExists){
+            rankings.push(rankInfo);
+        }
+
         return  gaugeChartData
 
     }
@@ -83,7 +95,7 @@ class Charts extends React.Component {
 
 
     getAllData = () => {
-        console.log("called");
+        // console.log("called");
         let newData = [];
         for(let i = 0; i < this.props.children.length; i++){
             let childBehaviorData = {
@@ -107,7 +119,7 @@ class Charts extends React.Component {
             }
             newData.push(childBehaviorData);
         }
-        console.log(newData);
+        // console.log(newData);
 
         this.setState({
             allData:newData
@@ -117,7 +129,8 @@ class Charts extends React.Component {
             this.getOverallAverage(newData[y])
         }
 
-        this.props.getChildData(newData)
+        this.props.getChildData(newData);
+
 
     }
 
@@ -125,7 +138,8 @@ class Charts extends React.Component {
         // setTimeout(this.fetchEntries,1100);
         // this.findChildren()
         if(this.props.fetching){
-            this.getAllData()
+            this.getAllData();
+            this.props.getRankings(rankings);
         }else{
             console.log("hi");
         }
@@ -135,11 +149,12 @@ class Charts extends React.Component {
   render() {
     return (
         <div className="chartContainer container my-5 p-4 d-flex flex-column align-items-center">
-            <div className="d-flex flex-row flex-wrap">
+            <div className="d-flex flex-row flex-wrap justify-content-center">
                 {this.state.allData.map((entry,key)=>(
                 <Link key={key} to={`/charts/${entry.child}`} onClick={()=>this.props.changeFetching(true)}>
                 <div className="chartAvgs m-3">
-                <h3>{entry.child} <span className="chartChildLink">(click for details)</span></h3>
+                <h3 className="m-0">{entry.child}</h3>
+                <p className="chartChildLink m-0">(click for details)</p>
                 <Doughnut data = {this.getOverallAverage(entry)} options = {{
                     circumference: Math.PI,
                     rotation : Math.PI,

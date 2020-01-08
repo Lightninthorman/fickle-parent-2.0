@@ -1,11 +1,6 @@
 import React from 'react';
 import * as fire from 'firebase';
 import {Link, Redirect} from 'react-router-dom';
-import JournalEntries from './JournalEntries.js'
-import Charts from './Charts.js'
-import ChildCharts from './ChildCharts.js'
-import Form from './Form.js';
-
 
 
 class Journal extends React.Component {

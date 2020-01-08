@@ -8,7 +8,7 @@ import JournalEntries from './components/JournalEntries.js'
 import Charts from './components/Charts.js'
 import ChildCharts from './components/ChildCharts.js'
 import Navbar from './components/Navbar.js'
-
+import Email from './components/Email.js'
 import Form from './components/Form.js';
 
 
@@ -23,14 +23,14 @@ class App extends React.Component{
             entries:[],
             children:[],
             formRedirect:false,
-            child:'Isaac',
-            view:'journal',
-            childData:[]
+            childData:[],
+            ranking:[],
+            emailInfo:{}
         }
     }
 
     fetchEntries = () => {
-        console.log('fetch called');
+        // console.log('fetch called');
         fetch(`${baseUrl}${this.state.user.uid}`)
         .then( data => data.json())
         .then(jData => {
@@ -40,7 +40,7 @@ class App extends React.Component{
     }
 
     handleCreate = (formData) => {
-        fetch(`${baseUrl}`,{
+        fetch(`${baseUrl}/create`,{
             body:JSON.stringify(formData),
             method:'POST',
             headers:{
@@ -146,7 +146,32 @@ class App extends React.Component{
         this.setState({
             childData:data
         })
-        console.log(data[0].child);
+        // console.log('get data calle',data);
+    }
+
+    getRankings = (childAndRank) =>{
+        let sortedRank = childAndRank.sort((a,b)=>{return b.average-a.average});
+        // console.log(sortedRank);
+        this.setState({
+            ranking:sortedRank
+        })
+    }
+
+    emailInfo = (info) => {
+        let rank = (this.state.ranking.findIndex(child => child.child === info.name))+1
+        // console.log(rank);
+        const email = {
+            name:info.name,
+            user:this.state.user.displayName,
+            email:this.state.user.email,
+            rank:rank,
+            score:info.overallAverage,
+            lowestAvg:info.lowestAvg
+        }
+
+        this.setState({
+            emailInfo:email
+        });
     }
 
     changeFetching = (bool) => {
@@ -271,6 +296,7 @@ class App extends React.Component{
                             getChildData={this.getChildData}
                             fetching={this.fetching}
                             changeFetching={this.changeFetching}
+                            getRankings={this.getRankings}
                             />
                         )}/>
 
@@ -282,11 +308,19 @@ class App extends React.Component{
                                     children={this.state.children}
                                     childData={this.state.childData}
                                     fetching={this.fetching}
+                                    emailInfo={this.emailInfo}
 
                                     />
                             )
                         }}/>
-
+                        <Route exact path = "/email/:name" render ={(props)=>{
+                            return(
+                                <Email
+                                    emailInfo={this.state.emailInfo}
+                                    userId={this.state.user.uid}
+                                />
+                            )
+                        }}/>
 
 
                     </Switch>

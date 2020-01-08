@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link, Redirect} from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 
 // let today =
 
@@ -47,7 +47,7 @@ class Form extends React.Component{
   }
 
   radioChange = (item,value)=>{
-      console.log(item + "->" + value);
+      // console.log(item + "->" + value);
       this.setState({
             [item]:value
       })
@@ -163,9 +163,7 @@ class Form extends React.Component{
       window.scrollTo(0,0)
   }
 
-  componentWillUnmount(){
-      this.toggleCancel();
-  }
+
 
     render(){
 
@@ -179,53 +177,53 @@ class Form extends React.Component{
                 <form onSubmit={this.handleSubmit}>
                     {this.state.formType === 'newChild' ?
                     <div className="form-group">
-                        <label htmlFor="child_name">Child Name</label>
+                        <label htmlFor="child_name"><h4>Child Name</h4></label>
                         <input type="text" className="form-control" id="child_name" onChange={this.handleChange} aria-describedby="childName" placeholder={this.state.child_name}/>
                     </div>
                     : null}
                     <div className="form-group">
-                        <label htmlFor="journal_entry">Journal Entry</label>
-                        <textarea className="form-control" id="journal_entry" onChange={this.handleChange} rows="6" defaultValue={this.state.journal_entry}></textarea>
+                        <label htmlFor="journal_entry"><h4>Journal Entry</h4></label>
+                        <textarea className="form-control" id="journal_entry" onChange={this.handleChange} rows="4" defaultValue={this.state.journal_entry}></textarea>
                     </div>
                     <h3>Rate your child's day:</h3>
                     <h4>Behavior</h4>
                     {this.populateFormRatings('behavior')}
                     <div className="form-group">
                         <label htmlFor="behavior_desc">Why did you give their behavior this rating?</label>
-                        <textarea className="form-control" id="behavior_desc" onChange={this.handleChange} rows="6" defaultValue={this.state.behavior_desc}></textarea>
+                        <textarea className="form-control" id="behavior_desc" onChange={this.handleChange} rows="3" defaultValue={this.state.behavior_desc}></textarea>
                     </div>
 
                     <h4>Helpful</h4>
                     {this.populateFormRatings('helpful')}
                     <div className="form-group">
                         <label htmlFor="helpful_desc">Why did you give their helpfulness this rating?</label>
-                        <textarea className="form-control" id="helpful_desc" onChange={this.handleChange} rows="6" defaultValue={this.state.helpful_desc}></textarea>
+                        <textarea className="form-control" id="helpful_desc" onChange={this.handleChange} rows="3" defaultValue={this.state.helpful_desc}></textarea>
                     </div>
 
                     <h4>Respect</h4>
                     {this.populateFormRatings('respect')}
                     <div className="form-group">
                         <label htmlFor="respect_desc">Why did you give their respect this rating?</label>
-                        <textarea className="form-control" id="respect_desc" onChange={this.handleChange} rows="6" defaultValue={this.state.respect_desc}></textarea>
+                        <textarea className="form-control" id="respect_desc" onChange={this.handleChange} rows="3" defaultValue={this.state.respect_desc}></textarea>
                     </div>
 
                     <h4>Effect On My Sleep</h4>
                     {this.populateFormRatings('sleep')}
                     <div className="form-group">
                         <label htmlFor="sleep_desc">Why did they affect your sleep in this way?</label>
-                        <textarea className="form-control" id="sleep_desc" onChange={this.handleChange} rows="6" defaultValue={this.state.sleep_desc}></textarea>
+                        <textarea className="form-control" id="sleep_desc" onChange={this.handleChange} rows="3" defaultValue={this.state.sleep_desc}></textarea>
                     </div>
 
                     <h4>Overall Feelings Toward This Kid In Particular</h4>
                     {this.populateFormRatings('regret')}
                     <div className="form-group">
                         <label htmlFor="regret_desc">Why do you regret your decsion to have kids? Maybe you don't, but you're not being honest with yourself.</label>
-                        <textarea className="form-control" id="regret_desc" onChange={this.handleChange} rows="6" defaultValue={this.state.regret_desc}></textarea>
+                        <textarea className="form-control" id="regret_desc" onChange={this.handleChange} rows="3" defaultValue={this.state.regret_desc}></textarea>
                     </div>
 
-                    <button type="submit" className="btn btn-primary">Submit</button>
+                    <button type="submit" className="btn btn-primary mx-2">Submit</button>
 
-                    <button type="button" className="btn btn-secondary" onClick={this.toggleCancel}>Cancel</button>
+                    <button type="button" className="btn btn-secondary mx-2" onClick={this.toggleCancel}>Cancel</button>
 
                 </form>
             </div>
