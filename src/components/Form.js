@@ -47,7 +47,7 @@ class Form extends React.Component{
   }
 
   radioChange = (item,value)=>{
-      console.log(item + "->" + value);
+      // console.log(item + "->" + value);
       this.setState({
             [item]:value
       })

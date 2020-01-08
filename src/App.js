@@ -151,6 +151,7 @@ class App extends React.Component{
 
     getRankings = (childAndRank) =>{
         let sortedRank = childAndRank.sort((a,b)=>{return b.average-a.average});
+        // console.log(sortedRank);
         this.setState({
             ranking:sortedRank
         })
@@ -158,6 +159,7 @@ class App extends React.Component{
 
     emailInfo = (info) => {
         let rank = (this.state.ranking.findIndex(child => child.child === info.name))+1
+        // console.log(rank);
         const email = {
             name:info.name,
             user:this.state.user.displayName,

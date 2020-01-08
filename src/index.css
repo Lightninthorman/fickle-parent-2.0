@@ -69,6 +69,10 @@ Navbar
     box-shadow:0 1px 15px 3px dimgrey;
 }
 
+.navLogo{
+    width:100px;
+}
+
 .logout{
     width:65px;
     height:25px;
@@ -110,7 +114,7 @@ Journal
 }
 
 .childBtn{
-    background-color:rgba(79,39,11,0.4);
+    background-color:rgba(79,39,11,0.5);
     color:white;
     border:2px inset silver;
 }
@@ -162,10 +166,8 @@ border-radius: 3px;
 padding:20px;
 }
 
-.chartChildLink{
-    font-weight: normal;
-    font-size: 16px;
-    padding-left: 10px;
+.chartAvgs h3, .chartAvgs p{
+    padding: 0;
 }
 
 .lineChart{

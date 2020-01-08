@@ -149,11 +149,12 @@ class Charts extends React.Component {
   render() {
     return (
         <div className="chartContainer container my-5 p-4 d-flex flex-column align-items-center">
-            <div className="d-flex flex-row flex-wrap">
+            <div className="d-flex flex-row flex-wrap justify-content-center">
                 {this.state.allData.map((entry,key)=>(
                 <Link key={key} to={`/charts/${entry.child}`} onClick={()=>this.props.changeFetching(true)}>
                 <div className="chartAvgs m-3">
-                <h3>{entry.child} <span className="chartChildLink">(click for details)</span></h3>
+                <h3 className="m-0">{entry.child}</h3>
+                <p className="chartChildLink m-0">(click for details)</p>
                 <Doughnut data = {this.getOverallAverage(entry)} options = {{
                     circumference: Math.PI,
                     rotation : Math.PI,

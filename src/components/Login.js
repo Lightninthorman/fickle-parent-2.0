@@ -1,5 +1,6 @@
 import React from 'react';
 import LoginModal from './LoginModal.js'
+import logo from '../images/Logo.png';
 
 class Login extends React.Component {
   constructor(props) {
@@ -27,8 +28,8 @@ class Login extends React.Component {
                     <LoginModal view={this.state.view} handleView={this.handleView}/>
                 :
                     <div className="loginMainContainer d-flex flex-column align-items-center w-100 ">
-                        <div className="jumbotron w-75 mt-5 d-flex flex-column align-items-center">
-                            <h1 className="display-4">The Fickle Parent</h1>
+                        <div className="jumbotron w-75 mt-5 d-flex flex-column align-items-center text-center">
+                            <img src={logo} className='w-50'/>
                             <p className="lead mb-0">Hey, they're your kids, we won't judge...</p>
                             <p className="lead mt-0">But now YOU can!</p>
                             <div className="my-4 d-flex flex-row justify-content-center">
