@@ -1,3 +1,5 @@
+
+@import url('https://fonts.googleapis.com/css?family=Elsie+Swash+Caps:400,900&display=swap');
 body {
   margin: 0;
   color:#363636;
@@ -25,6 +27,11 @@ a{
 
 a:hover{
     text-decoration: none;
+}
+
+h1,h2,h3,h4{
+    font-family: 'Elsie Swash Caps', cursive;
+    font-weight: 900;
 }
 
 
@@ -79,6 +86,11 @@ Navbar
     padding: 0;
 }
 
+.navLinks{
+    font-size: 30px;
+    margin:auto;
+    font-family: 'Elsie Swash Caps', cursive;
+}
 /*
 =========
 Journal
@@ -104,6 +116,7 @@ Journal
 
 .journalPageContainer h1{
     color:whitesmoke;
+
 }
 
 .addChildBtn{

@@ -1,7 +1,6 @@
 import React from 'react';
 import {Redirect} from 'react-router-dom';
 
-// let today =
 
 class Form extends React.Component{
     constructor(props) {
@@ -112,9 +111,6 @@ class Form extends React.Component{
 
           }
       }
-
-
-
   }
 
   populateFormForUpdate = (entry,form) => {

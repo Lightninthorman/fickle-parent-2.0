@@ -17,7 +17,6 @@ class Login extends React.Component {
   }
 
 
-
   render() {
     return (
         <div className="login container d-flex flex-column align-items-center min-vh-100">
@@ -68,10 +67,6 @@ class Login extends React.Component {
                         </div>
                     </div>
             }
-
-
-
-
         </div>
     );
   }

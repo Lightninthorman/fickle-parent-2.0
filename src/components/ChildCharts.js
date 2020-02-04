@@ -152,8 +152,6 @@ class ChildCharts extends React.Component {
             break;
         }
 
-        // console.log(needsImprovement);
-
         let overallLineData =[];
         for(let i = 0; i < data.dates.length; i++){
             let dailyAvg = (data.behaviorData[i] + data.helpfulData[i] + data.respectData[i] + data.sleepData[i] + data.regretData[i])/5;
@@ -212,17 +210,17 @@ class ChildCharts extends React.Component {
     return (
        <div className="chartContainer container my-5 p-4 d-flex flex-column align-items-center">
 
-            <h3>Hi! You made it to {this.props.name}'s charts!</h3>
+            <h3>{this.props.name}'s Performance Charts!</h3>
 
             <Link to={`/email/${this.props.name}`} className="btn btn-primary">Send Email</Link>
 
             <div className="childChartContainer2 d-flex flex-row flex-wrap justify-content-center">
-            <div className="childAvgChart">
-            <Line data = {this.state.overallLineChart} options = {this.state.chartOptions1}/>
-            </div>
-            <div className="childAvgChart">
-            <Radar data ={this.state.radarChart} options = {this.state.chartOptions2} />
-            </div>
+                <div className="childAvgChart">
+                    <Line data = {this.state.overallLineChart} options = {this.state.chartOptions1}/>
+                </div>
+                <div className="childAvgChart">
+                    <Radar data ={this.state.radarChart} options = {this.state.chartOptions2} />
+                </div>
             </div>
             <button onClick={this.changeChartType} className="btn btn-info">Change to {this.state.chartTypeLine ? 'bar' : 'line'} chart!</button>
             <div className="childChartContainer2 d-flex flex-row flex-wrap justify-content-center">

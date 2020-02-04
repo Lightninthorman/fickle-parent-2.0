@@ -178,23 +178,6 @@ class App extends React.Component{
         this.fetching = bool
     }
 
-    componentDidMount(){
-        this.authListener();
-        // this.fetchEntries();
-
-    }
-
-    componentDidUpdate(prevProps,prevState){
-        if(this.state.user.uid !== prevState.user.uid){
-            if(this.state.user.uid){
-                this.fetchEntries();
-            }
-
-        }
-        window.scrollTo(0,0);
-        // console.log("updateState",this.state.user.displayName);
-    }
-
     authListener = () =>{
 
             firebase.auth().onAuthStateChanged((user)=>{
@@ -211,8 +194,23 @@ class App extends React.Component{
                     })
                 }
             })
-            // setTimeout(this.fetchEntries,500);
     }
+
+
+    componentDidMount(){
+        this.authListener();
+    }
+
+    componentDidUpdate(prevProps,prevState){
+        if(this.state.user.uid !== prevState.user.uid){
+            if(this.state.user.uid){
+                this.fetchEntries();
+            }
+
+        }
+        window.scrollTo(0,0);
+    }
+
 
     render(){
         return(
