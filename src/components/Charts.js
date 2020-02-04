@@ -3,7 +3,7 @@ import {Line,Doughnut} from 'react-chartjs-2';
 import {Link} from 'react-router-dom';
 
 
-
+//**Testing to see how useful setting variables outside of object can be. After setting it up I have found that it is not as good as other options.
 let lineDataCompareAll = {
     labels:[],
     datasets:[]
@@ -53,9 +53,7 @@ class Charts extends React.Component {
         if(!childExists){
             rankings.push(rankInfo);
         }
-
         return  gaugeChartData
-
     }
 
     getLineData = (data) => {
@@ -135,13 +133,11 @@ class Charts extends React.Component {
     }
 
     componentDidMount(){
-        // setTimeout(this.fetchEntries,1100);
-        // this.findChildren()
         if(this.props.fetching){
             this.getAllData();
             this.props.getRankings(rankings);
         }else{
-            console.log("hi");
+            console.log("Nothing to report");
         }
         window.scrollTo(0,0);
     }
@@ -152,20 +148,20 @@ class Charts extends React.Component {
             <div className="d-flex flex-row flex-wrap justify-content-center">
                 {this.state.allData.map((entry,key)=>(
                 <Link key={key} to={`/charts/${entry.child}`} onClick={()=>this.props.changeFetching(true)}>
-                <div className="chartAvgs m-3">
-                <h3 className="m-0">{entry.child}</h3>
-                <p className="chartChildLink m-0">(click for details)</p>
-                <Doughnut data = {this.getOverallAverage(entry)} options = {{
-                    circumference: Math.PI,
-                    rotation : Math.PI,
-                    cutoutPercentage : 55,
-                    legend:{
-                        display:false
-                    }
-                        }}
-                />
-                <h3>{average}%</h3>
-                </div>
+                    <div className="chartAvgs m-3">
+                        <h3 className="m-0">{entry.child}</h3>
+                        <p className="chartChildLink m-0">(click for details)</p>
+                        <Doughnut data = {this.getOverallAverage(entry)} options = {{
+                            circumference: Math.PI,
+                            rotation : Math.PI,
+                            cutoutPercentage : 55,
+                            legend:{
+                                display:false
+                            }
+                                }}
+                        />
+                        <h3>{average}%</h3>
+                    </div>
                 </Link>))}
             </div>
             <div className="lineChart w-75">

@@ -70,14 +70,14 @@ class Login extends React.Component {
                     <input value={this.state.password} onChange={this.handleChange} type="password" name="password" className="form-control" id="password" required placeholder="Password" />
                 </div>
                 <div className="d-flex flex-row justify-content-center">
-                {this.props.view === 'login'?
-                <button type="submit" onClick={this.login} className="btn btn-primary btn-lg mx-4">Login</button> :
-                <button onClick={this.signup} style={{marginLeft: '25px'}} className="btn btn-success btn-lg mx-4">Signup</button>
-            }
-                <button
-                    className="btn btn-secondary btn-lg mx-4"
-                    onClick={()=>this.props.handleView('options')}>Cancel
-                </button>
+                    {this.props.view === 'login'?
+                    <button type="submit" onClick={this.login} className="btn btn-primary btn-lg mx-4">Login</button> :
+                    <button onClick={this.signup} style={{marginLeft: '25px'}} className="btn btn-success btn-lg mx-4">Signup</button>
+                }
+                    <button
+                        className="btn btn-secondary btn-lg mx-4"
+                        onClick={()=>this.props.handleView('options')}>Cancel
+                    </button>
                 </div>
 
             </form>

@@ -8,7 +8,8 @@ class JournalEntries extends React.Component {
         super(props);
         this.state = {
             displayDetails:false,
-            key:null
+            key:null,
+            categories:['behavior','helpful','respect','sleep','regret']
         }
     }
 
@@ -47,41 +48,19 @@ class JournalEntries extends React.Component {
                             </p>
                             {this.state.key === key && this.state.displayDetails ?
                                 <div className="d-flex flex-row flex-wrap justify-content-start">
-                                    <div className="details m-1 p-1">
-                                        <h4 className="m-0 p-0">Behavior</h4>
-                                        <p className="m-0 p-0"><strong>Score:</strong></p>
-                                        <p className="m-0 p-0">{entry.behavior}</p>
-                                        <p className="m-0 p-0"><strong>Notes:</strong></p>
-                                        <p className="m-0 p-0">{entry.behavior_desc}</p>
-                                    </div>
-                                    <div className="details m-1 p-1">
-                                        <h4 className="m-0 p-0">Helpful</h4>
-                                        <p className="m-0 p-0"><strong>Score:</strong></p>
-                                        <p className="m-0 p-0">{entry.helpful}</p>
-                                        <p className="m-0 p-0"><strong>Notes:</strong></p>
-                                        <p className="m-0 p-0">{entry.helpful_desc}</p>
-                                    </div>
-                                    <div className="details m-1 p-1">
-                                        <h4 className="m-0 p-0">Respect</h4>
-                                        <p className="m-0 p-0"><strong>Score:</strong></p>
-                                        <p className="m-0 p-0">{entry.respect}</p>
-                                        <p className="m-0 p-0"><strong>Notes:</strong></p>
-                                        <p className="m-0 p-0">{entry.respect_desc}</p>
-                                    </div>
-                                    <div className="details m-1 p-1">
-                                        <h4 className="m-0 p-0">Sleep</h4>
-                                        <p className="m-0 p-0"><strong>Score:</strong></p>
-                                        <p className="m-0 p-0">{entry.sleep}</p>
-                                        <p className="m-0 p-0"><strong>Notes:</strong></p>
-                                        <p className="m-0 p-0">{entry.sleep_desc}</p>
-                                    </div>
-                                    <div className="details m-1 p-1">
-                                        <h4 className="m-0 p-0">Regret</h4>
-                                        <p className="m-0 p-0"><strong>Score:</strong></p>
-                                        <p className="m-0 p-0">{entry.regret}</p>
-                                        <p className="m-0 p-0"><strong>Notes:</strong></p>
-                                        <p className="m-0 p-0">{entry.regret_desc}</p>
-                                    </div>
+                                    {this.state.categories.map((category,key)=>{
+                                        let description = category + "_desc"
+                                        return(
+                                            <div className="details m-1 p-1" key = {key}>
+                                                <h4 className="m-0 p-0" style={{textTransform:"capitalize"}}>{category}</h4>
+                                                <p className="m-0 p-0"><strong>Score:</strong></p>
+                                                <p className="m-0 p-0">{entry[category]}</p>
+                                                <p className="m-0 p-0"><strong>Notes:</strong></p>
+                                                <p className="m-0 p-0">{entry[description]}</p>
+                                            </div>
+                                        )
+                                    })}
+
                                 </div>
                             :
                                 null}
